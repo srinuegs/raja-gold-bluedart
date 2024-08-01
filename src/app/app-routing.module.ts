@@ -8,9 +8,10 @@ import { PagenotfoundComponent } from './Components/pagenotfound/pagenotfound.co
 import { ContactComponent } from './Components/contact/contact.component';
 import { SignupComponent } from './Components/signup/signup.component';
 import { BlogComponent } from './Components/blog/blog.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  {path: '', redirectTo:'/home', pathMatch: 'full'},
+  {path: '', redirectTo:'/dashboard', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'blog', component: BlogComponent},
+  {path: 'dashboard', component: DashboardComponent},
   {path: '**', component: PagenotfoundComponent},
 ]
 @NgModule({

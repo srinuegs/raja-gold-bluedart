@@ -1,0 +1,20 @@
+.card-custom-1 { background-color: #f8d7da; } /* Light red */
+.card-custom-2 { background-color: #d4edda; } /* Light green */
+.card-custom-3 { background-color: #d1ecf1; } /* Light blue */
+.card-custom-4 { background-color: #fff3cd; } /* Light yellow */
+.dashboard-header {
+    background-color: #f8f9fa; /* Light grey background for the header */
+    padding: 15px;
+    border-radius: 5px; /* Rounded corners for the header */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
+}
+
+.dashboard-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.dashboard-header span {
+    font-size: 1rem;
+    color: #6c757d; /* Bootstrap secondary color */
+}
