@@ -14,6 +14,9 @@ import { PagenotfoundComponent } from './Components/pagenotfound/pagenotfound.co
 import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { InternalusersComponent } from './Components/internalusers/internalusers.component';
+import { BookingsComponent } from './Components/bookings/bookings.component';
+import { CustomersComponent } from './Components/customers/customers.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
     PagenotfoundComponent,
     HeaderComponent,
     FooterComponent,
-    DashboardComponent
+    DashboardComponent,
+    InternalusersComponent,
+    BookingsComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,

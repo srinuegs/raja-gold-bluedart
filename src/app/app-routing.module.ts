@@ -9,6 +9,9 @@ import { ContactComponent } from './Components/contact/contact.component';
 import { SignupComponent } from './Components/signup/signup.component';
 import { BlogComponent } from './Components/blog/blog.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { InternalusersComponent } from './Components/internalusers/internalusers.component';
+import { BookingsComponent } from './Components/bookings/bookings.component';
+import { CustomersComponent } from './Components/customers/customers.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'/dashboard', pathMatch: 'full'},
@@ -21,6 +24,11 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'blog', component: BlogComponent},
   {path: 'dashboard', component: DashboardComponent},
+  {path: 'internalusers', component: InternalusersComponent},
+  {path: 'bookings', component: BookingsComponent},
+  {path: 'customers', component: CustomersComponent},
+
+
   {path: '**', component: PagenotfoundComponent},
 ]
 @NgModule({
