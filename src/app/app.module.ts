@@ -17,6 +17,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { InternalusersComponent } from './Components/internalusers/internalusers.component';
 import { BookingsComponent } from './Components/bookings/bookings.component';
 import { CustomersComponent } from './Components/customers/customers.component';
+import { OrderFormComponent } from './Components/order-form/order-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CustomersComponent } from './Components/customers/customers.component';
     DashboardComponent,
     InternalusersComponent,
     BookingsComponent,
-    CustomersComponent
+    CustomersComponent,
+    OrderFormComponent
   ],
   imports: [
     BrowserModule,

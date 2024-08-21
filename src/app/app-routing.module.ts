@@ -11,7 +11,7 @@ import { BlogComponent } from './Components/blog/blog.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { InternalusersComponent } from './Components/internalusers/internalusers.component';
 import { BookingsComponent } from './Components/bookings/bookings.component';
-import { CustomersComponent } from './Components/customers/customers.component';
+import { OrderFormComponent } from './Components/order-form/order-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'/dashboard', pathMatch: 'full'},
@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'internalusers', component: InternalusersComponent},
   {path: 'bookings', component: BookingsComponent},
-  {path: 'customers', component: CustomersComponent},
+  {path: 'order-form', component: OrderFormComponent},
 
 
   {path: '**', component: PagenotfoundComponent},
