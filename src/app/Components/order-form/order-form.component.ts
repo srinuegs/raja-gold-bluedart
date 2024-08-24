@@ -1,6 +1,8 @@
+// src/app/order-form/order-form.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ApiService } from '../../api.service'; // Ensure correct import
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
@@ -9,9 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class OrderFormComponent implements OnInit {
   orderForm!: FormGroup;
   couriers: string[] = ['BlueDart'];
-  constructor(private fb: FormBuilder) { 
-    this.orderForm = this.fb.group({});
-  }
+
+  constructor(private fb: FormBuilder, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.orderForm = this.fb.group({
@@ -100,62 +101,64 @@ export class OrderFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let requestObject;
     if (this.orderForm.valid) {
       console.log(this.orderForm.value);
-        requestObject = {
-          "courierList": this.orderForm.value.courierList,
-          "pickupDate":conversionDateFormat(this.orderForm.value.pickupDate),
-          "pickupTime": convertTimeFormat(this.orderForm.value.pickupTime),
-          "companyName":this.orderForm.value.companyName,
-          "deliveryPincode":this.orderForm.value.deliveryPincode,
-          "pieceCount":this.orderForm.value.pieceCount,
-          "actualWeight":this.orderForm.value.actualWeight,
-          "declareValue":this.orderForm.value.declareValue,
-          "length":this.orderForm.value.length,
-          "breadth":this.orderForm.value.breadth,
-          "height":this.orderForm.value.height,
-          "senderName": this.orderForm.value.senderName,
-          "senderMobile": this.orderForm.value.senderMobile,
-          "receiverTelephone": this.orderForm.value.receiverTelephone,
-          "receiverMobile": this.orderForm.value.receiverMobile,
-          "receiverName": this.orderForm.value.receiverName,
-          "receiverEmail":this.orderForm.value.receiverEmail,
-          "maskedContactNo":this.orderForm.value.maskedContactNo,
-          "deliveryAddress":this.orderForm.value.deliveryAddress
-        }
+
+      let requestObject = {
+        "courierList": this.orderForm.value.courierList,
+        "pickupDate": conversionDateFormat(this.orderForm.value.pickupDate),
+        "pickupTime": convertTimeFormat(this.orderForm.value.pickupTime),
+        "companyName": this.orderForm.value.companyName,
+        "deliveryPincode": this.orderForm.value.deliveryPincode,
+        "pieceCount": this.orderForm.value.pieceCount,
+        "actualWeight": this.orderForm.value.actualWeight,
+        "declareValue": this.orderForm.value.declareValue,
+        "length": this.orderForm.value.length,
+        "breadth": this.orderForm.value.breadth,
+        "height": this.orderForm.value.height,
+        "senderName": this.orderForm.value.senderName,
+        "senderMobile": this.orderForm.value.senderMobile,
+        "receiverTelephone": this.orderForm.value.receiverTelephone,
+        "receiverMobile": this.orderForm.value.receiverMobile,
+        "receiverName": this.orderForm.value.receiverName,
+        "receiverEmail": this.orderForm.value.receiverEmail,
+        "maskedContactNo": this.orderForm.value.maskedContactNo,
+        "deliveryAddress": this.orderForm.value.deliveryAddress
+      };
+
       console.log(requestObject);
+
+      this.apiService.postData(requestObject).subscribe(
+        (response) => {
+          console.log('Data submitted:', response);
+        },
+        (error) => {
+          console.error('Error submitting data:', error);
+        }
+      );
     } else {
       console.log('Form is invalid');
     }
   }
 }
+
 function convertTimeFormat(data: string): string {
-  // Check if the input timeString is in the correct format
   const timePattern = /^(\d{2}):(\d{2})$/;
   const match = data.match(timePattern);
 
   if (match) {
-    // Extract hours and minutes from the matched groups
     const hours = match[1];
     const minutes = match[2];
-
-    // Concatenate hours and minutes to get the new format
     return `${hours}${minutes}`;
   } else {
-    // Return an error message or handle invalid format
     throw new Error('Invalid time format. Expected format is HH:mm');
   }
 }
-function conversionDateFormat(data: Date) {
-  // Parse the input date string to a Date object
+
+function conversionDateFormat(data: string): string {
   const date = new Date(data);
-
-  // Extract day, month, and year from the Date object
-  const day = date.getDate().toString().padStart(2, '0'); // Ensure two-digit day
-  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based, so add 1
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const year = date.getFullYear();
-
-  // Format the date as DD-MM-YYYY
   return `${day}-${month}-${year}`;
 }
