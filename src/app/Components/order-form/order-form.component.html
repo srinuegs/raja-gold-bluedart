@@ -1,120 +1,250 @@
 <app-header></app-header>
-<div class="container-fluid px-1 py-5 mx-auto">
-    <div class="row d-flex justify-content-center">
-        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-            <h3>Order Form</h3>
-            <!-- <p class="blue-text">Just answer a few questions<br> so that we can personalize the right experience for you.</p> -->
-            <div class="card">
-                <!-- <h5 class="text-center mb-4">Powering world-class companies</h5> -->
-                <form class="form-card" onsubmit="event.preventDefault()">
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Shipper Name<span class="text-danger"> *</span></label>
-                            <input type="text" id="fname" name="sname" placeholder="Enter your Shipping name"
-                                onblur="validate(1)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Pickup Date<span class="text-danger"> *</span></label>
-                            <input type="date" id="pickupdate" name="pickupdate" placeholder="Enter your pickup date"
-                                onblur="validate(2)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Pickup Time<span class="text-danger"> *</span></label>
-                            <input type="date" id="pickuptime" name="pickuptime" placeholder="Enter your pickup time"
-                                onblur="validate(2)">
-                        </div>
-                    </div>
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Company Name<span class="text-danger">
-                                    *</span></label> <input type="text" id="companyName" name="companyName"
-                                placeholder="Company Name" onblur="validate(3)"> </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Delivery Pincode<span class="text-danger">
-                                    *</span></label>
-                            <input type="number" id="pincode" name="pincode" placeholder="Delivery Pincode"
-                                onblur="validate(4)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Delivery Address<span class="text-danger">
-                                    *</span></label>
-                            <textarea id="address" name="address" placeholder="Delivery Address"
-                                onblur="validate(4)"></textarea>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Piece Count<span class="text-danger"> *</span></label>
-                            <input type="text" id="pieceCount" name="pieceCount" placeholder="Piece Count"
-                                onblur="validate(5)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Actual Weight <span class="text-danger">
-                                    *</span></label> <input type="text" id="actualWeight" name="actualWeight"
-                                placeholder="Actual Weight" onblur="validate(5)"> </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Declare Value<span class="text-danger"> *</span></label>
-                            <input type="text" id="declareValue" name="declareValue" placeholder="Declare Value"
-                                onblur="validate(5)">
-                        </div>
-                    </div>
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Length<span class="text-danger"> *</span></label>
-                            <input type="text" id="length" name="length" placeholder="Length" onblur="validate(5)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Breadth <span class="text-danger">
-                                    *</span></label> <input type="text" id="breadth" name="breadth"
-                                placeholder="Breadth" onblur="validate(5)"> </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Height<span class="text-danger"> *</span></label>
-                            <input type="text" id="height" name="height" placeholder="Height" onblur="validate(5)">
-                        </div>
-                    </div>
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Sender Mobile<span class="text-danger"> *</span></label>
-                            <input type="text" id="senderMobile" name="senderMobile" placeholder="Sender Mobile" onblur="validate(5)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Receiver Telephone <span class="text-danger">
-                                    *</span></label> <input type="text" id="receiverTelephone" name="receiverTelephone"
-                                placeholder="Receiver Telephone" onblur="validate(5)"> </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Receiver Mobile<span class="text-danger"> *</span></label>
-                            <input type="text" id="receiverMobile" name="receiverMobile" placeholder="Receiver Mobile" onblur="validate(5)">
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Receiver Name<span class="text-danger"> *</span></label>
-                            <input type="text" id="receiverName" name="receiverName" placeholder="Receiver Name" onblur="validate(5)">
-                        </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Receiver Email <span class="text-danger">
-                                    *</span></label> <input type="text" id="receiverEmail" name="receiverEmail"
-                                placeholder="Receiver Email" onblur="validate(5)"> </div>
-                        <div class="form-group col-sm-4 flex-column d-flex"> <label
-                                class="form-control-label px-3">Masked Contact No<span class="text-danger"> *</span></label>
-                            <input type="text" id="maskedContactNumber" name="maskedContactNumber" placeholder="Masked Contact No" onblur="validate(5)">
-                        </div>
-                    </div>
-
-
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">What
-                                would you be using Flinks for?<span class="text-danger"> *</span></label> <input
-                                type="text" id="ans" name="ans" placeholder="" onblur="validate(6)"> </div>
-                    </div>
-                    <div class="row justify-content-end">
-                        <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Request a
-                                demo</button> </div>
-                    </div>
-                </form>
+<div class="container-fluid py-11 mx-auto">
+<div class="row d-flex justify-content-center">
+   <div class="col-11">
+      <h3>Order Form</h3>
+      <!-- <p class="blue-text">Just answer a few questions<br> so that we can personalize the right experience for you.</p> -->
+      <div class="card">
+         <div class="responsive-form-container">
+            <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="responsive-form">
+            <div class="form-row">
+               <div class="form-column">
+                  <!-- Courier List -->
+                  <div class="form-group">
+                     <label for="courierList">Courier List *</label>
+                     <input id="courierList" value="BlueDart" formControlName="courierList" maxlength="30" >
+                     <div *ngIf="orderForm.get('courierList')?.invalid && orderForm.get('courierList')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('courierList')?.errors?.['required']">Courier List is required.</div>
+                        <div *ngIf="orderForm.get('courierList')?.errors?.['maxlength']">Maximum length is 30 characters.</div>
+                        <div *ngIf="orderForm.get('courierList')?.errors?.['pattern']">Invalid characters.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Pickup Date -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="pickupDate">Pickup Date *</label>
+                     <input id="pickupDate" type="date" formControlName="pickupDate" placeholder="dd/mm/yyyy">
+                     <div *ngIf="orderForm.get('pickupDate')?.invalid && orderForm.get('pickupDate')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('pickupDate')?.errors?.['required']">Pickup Date is required.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Pickup Time -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="pickupTime">Pickup Time *</label>
+                     <input id="pickupTime" type="time" formControlName="pickupTime">
+                     <div *ngIf="orderForm.get('pickupTime')?.invalid && orderForm.get('pickupTime')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('pickupTime')?.errors?.['required']">Pickup Time is required.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Company Name -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="companyName">Company Name *</label>
+                     <input id="companyName" formControlName="companyName" maxlength="30">
+                     <div *ngIf="orderForm.get('companyName')?.invalid && orderForm.get('companyName')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('companyName')?.errors?.['required']">Company Name is required.</div>
+                        <div *ngIf="orderForm.get('companyName')?.errors?.['maxlength']">Maximum length is 30 characters.</div>
+                        <div *ngIf="orderForm.get('companyName')?.errors?.['pattern']">Invalid characters.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Delivery Pincode -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="deliveryPincode">Delivery Pincode *</label>
+                     <input id="deliveryPincode" type="number" formControlName="deliveryPincode" maxlength="6">
+                     <div *ngIf="orderForm.get('deliveryPincode')?.invalid && orderForm.get('deliveryPincode')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('deliveryPincode')?.errors?.['required']">Delivery Pincode is required.</div>
+                        <div *ngIf="orderForm.get('deliveryPincode')?.errors?.['maxlength']">Maximum length is 6 characters.</div>
+                        <div *ngIf="orderForm.get('deliveryPincode')?.errors?.['pattern']">Invalid pincode. Must be 6 digits.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Piece Count -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="pieceCount">Piece Count *</label>
+                     <input id="pieceCount" type="number" formControlName="pieceCount" maxlength="4">
+                     <div *ngIf="orderForm.get('pieceCount')?.invalid && orderForm.get('pieceCount')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('pieceCount')?.errors?.['required']">Piece Count is required.</div>
+                        <div *ngIf="orderForm.get('pieceCount')?.errors?.['maxlength']">Maximum length is 4 characters.</div>
+                        <div *ngIf="orderForm.get('pieceCount')?.errors?.['pattern']">Invalid piece count. Must be between 0 and 9999.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Actual Weight -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="actualWeight">Actual Weight *</label>
+                     <input id="actualWeight"  formControlName="actualWeight" maxlength="11">
+                     <div *ngIf="orderForm.get('actualWeight')?.invalid && orderForm.get('actualWeight')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('actualWeight')?.errors?.['required']">Actual Weight is required.</div>
+                        <div *ngIf="orderForm.get('actualWeight')?.errors?.['maxlength']">Maximum length is 11 characters (8 digits and 2 decimal places).</div>
+                        <div *ngIf="orderForm.get('actualWeight')?.errors?.['pattern']">Invalid weight format. Use up to 99999999.99.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Declare Value -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="declareValue">Declare Value *</label>
+                     <input id="declareValue" formControlName="declareValue" maxlength="13">
+                     <div *ngIf="orderForm.get('declareValue')?.invalid && orderForm.get('declareValue')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('declareValue')?.errors?.['required']">Declare Value is required.</div>
+                        <div *ngIf="orderForm.get('declareValue')?.errors?.['maxlength']">Maximum length is 13 characters (10 digits and 2 decimal places).</div>
+                        <div *ngIf="orderForm.get('declareValue')?.errors?.['pattern']">Invalid value format. Use up to 9999999999.99.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Length -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="length">Length *</label>
+                     <input id="length" formControlName="length" maxlength="9">
+                     <div *ngIf="orderForm.get('length')?.invalid && orderForm.get('length')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('length')?.errors?.['required']">Length is required.</div>
+                        <div *ngIf="orderForm.get('length')?.errors?.['maxlength']">Maximum length is 9 characters (6 digits and 2 decimal places).</div>
+                        <div *ngIf="orderForm.get('length')?.errors?.['pattern']">Invalid length format. Use up to 999999.99.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Breadth -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="breadth">Breadth *</label>
+                     <input id="breadth" formControlName="breadth" maxlength="9">
+                     <div *ngIf="orderForm.get('breadth')?.invalid && orderForm.get('breadth')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('breadth')?.errors?.['required']">Breadth is required.</div>
+                        <div *ngIf="orderForm.get('breadth')?.errors?.['maxlength']">Maximum length is 9 characters (6 digits and 2 decimal places).</div>
+                        <div *ngIf="orderForm.get('breadth')?.errors?.['pattern']">Invalid breadth format. Use up to 999999.99.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Height -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="height">Height *</label>
+                     <input id="height" formControlName="height" maxlength="9">
+                     <div *ngIf="orderForm.get('height')?.invalid && orderForm.get('height')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('height')?.errors?.['required']">Height is required.</div>
+                        <div *ngIf="orderForm.get('height')?.errors?.['maxlength']">Maximum length is 9 characters (6 digits and 2 decimal places).</div>
+                        <div *ngIf="orderForm.get('height')?.errors?.['pattern']">Invalid height format. Use up to 999999.99.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Sender Name -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="senderName">Sender Name *</label>
+                     <input id="senderName"  formControlName="senderName" maxlength="20">
+                     <div *ngIf="orderForm.get('senderName')?.invalid && orderForm.get('senderName')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('senderName')?.errors?.['required']">Sender Name is required.</div>
+                        <div *ngIf="orderForm.get('senderName')?.errors?.['maxlength']">Maximum length is 20 characters.</div>
+                        <div *ngIf="orderForm.get('senderName')?.errors?.['pattern']">Invalid characters.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Sender Mobile -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="senderMobile">Sender Mobile *</label>
+                     <input id="senderMobile" type="number" formControlName="senderMobile" maxlength="10" >
+                     <div *ngIf="orderForm.get('senderMobile')?.invalid && orderForm.get('senderMobile')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('senderMobile')?.errors?.['required']">Sender Mobile is required.</div>
+                        <div *ngIf="orderForm.get('senderMobile')?.errors?.['maxlength']">Maximum length is 10 digits.</div>
+                        <div *ngIf="orderForm.get('senderMobile')?.errors?.['pattern']">Invalid mobile number. Must be 10 digits.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Receiver Telephone -->         
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="receiverTelephone">Receiver Telephone *</label>
+                     <input id="receiverTelephone" type="number" formControlName="receiverTelephone" maxlength="10" >
+                     <div *ngIf="orderForm.get('receiverTelephone')?.invalid && orderForm.get('receiverTelephone')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('receiverTelephone')?.errors?.['required']">Receiver Telephone is required.</div>
+                        <div *ngIf="orderForm.get('receiverTelephone')?.errors?.['maxlength']">Maximum length is 10 digits.</div>
+                        <div *ngIf="orderForm.get('receiverTelephone')?.errors?.['pattern']">Invalid telephone number. Must be 10 digits.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Receiver Mobile -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="receiverMobile">Receiver Mobile *</label>
+                     <input id="receiverMobile" type="number" formControlName="receiverMobile" maxlength="10">
+                     <div *ngIf="orderForm.get('receiverMobile')?.invalid && orderForm.get('receiverMobile')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('receiverMobile')?.errors?.['required']">Receiver Mobile is required.</div>
+                        <div *ngIf="orderForm.get('receiverMobile')?.errors?.['maxlength']">Maximum length is 10 digits.</div>
+                        <div *ngIf="orderForm.get('receiverMobile')?.errors?.['pattern']">Invalid mobile number. Must be 10 digits.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Receiver Name -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="receiverName">Receiver Name *</label>
+                     <input id="receiverName" formControlName="receiverName" maxlength="30">
+                     <div *ngIf="orderForm.get('receiverName')?.invalid && orderForm.get('receiverName')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('receiverName')?.errors?.['required']">Receiver Name is required.</div>
+                        <div *ngIf="orderForm.get('receiverName')?.errors?.['maxlength']">Maximum length is 30 characters.</div>
+                        <div *ngIf="orderForm.get('receiverName')?.errors?.['pattern']">Invalid characters.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Receiver Email -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="receiverEmail">Receiver Email *</label>
+                     <input id="receiverEmail" formControlName="receiverEmail" maxlength="50" type="email">
+                     <div *ngIf="orderForm.get('receiverEmail')?.invalid && orderForm.get('receiverEmail')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('receiverEmail')?.errors?.['required']">Receiver Email is required.</div>
+                        <div *ngIf="orderForm.get('receiverEmail')?.errors?.['maxlength']">Maximum length is 50 characters.</div>
+                        <div *ngIf="orderForm.get('receiverEmail')?.errors?.['email']">Invalid email format.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Masked Contact No -->
+               <div class="form-column">
+                  <div class="form-group">
+                     <label for="maskedContactNo">Masked Contact No *</label>
+                     <input id="maskedContactNo" type="number" formControlName="maskedContactNo" maxlength="10">
+                     <div *ngIf="orderForm.get('maskedContactNo')?.invalid && orderForm.get('maskedContactNo')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('maskedContactNo')?.errors?.['required']">Masked Contact No is required.</div>
+                        <div *ngIf="orderForm.get('maskedContactNo')?.errors?.['maxlength']">Maximum length is 10 characters.</div>
+                        <div *ngIf="orderForm.get('maskedContactNo')?.errors?.['pattern']">Invalid characters.</div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Delivery Address -->
+               <div >
+                  <div class="form-group">
+                     <label for="deliveryAddress">Delivery Address *</label>
+                     <textarea id="deliveryAddress" formControlName="deliveryAddress" maxlength="90" style="width: -webkit-fill-available;"></textarea>
+                     <div *ngIf="orderForm.get('deliveryAddress')?.invalid && orderForm.get('deliveryAddress')?.touched" class="error-message">
+                        <div *ngIf="orderForm.get('deliveryAddress')?.errors?.['required']">Delivery Address is required.</div>
+                        <div *ngIf="orderForm.get('deliveryAddress')?.errors?.['maxlength']">Maximum length is 90 characters.</div>
+                        <div *ngIf="orderForm.get('deliveryAddress')?.errors?.['pattern']">Invalid characters.</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-column">
+                  <div>
+                  </div>
+               </div>
+               <div class="form-column">
+                  <div>
+                     <label for="XXXX">Click On Submit</label>
+                     <button type="submit" [disabled]="orderForm.invalid">Submit</button>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+            </form>
+         </div>
+      </div>
+   </div>
 </div>
-<app-footer></app-footer>

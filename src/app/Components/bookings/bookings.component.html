@@ -1,3 +1,96 @@
-<app-header />
-<p>bookings works!</p>
-<app-footer />
+<app-header></app-header>
+<div class="container-m5 py-11">
+  <div class="row d-flex justify-content-center">
+    <div class="col-11">
+      <h3>Order List</h3>
+      <div class="card">
+        <div class="responsive-form-container">
+          <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Search:
+              <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearch($event)" placeholder="Search..." class="form-control">
+                </label>
+            </div>
+            <div class="col-md-6">
+                <label>Date:
+                  <input type="text" [(ngModel)]="filterDate" (ngModelChange)="onDateChange()" placeholder="dd/mm/yyyy" class="form-control">
+                </label>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th (click)="onSort('id')">ID</th>
+                  <th (click)="onSort('name')">Name</th>
+                  <th (click)="onSort('email')">Email</th>
+                  <th (click)="onSort('date')">Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of displayedData">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.email }}</td>
+                  <td>{{ item.date | date:'dd/MM/yyyy' }}</td>
+                  <td class="actionbutt">
+                    <button (click)="openEditModal(item)" class="btn">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="pagination" style="justify-content: center">
+              <button 
+                (click)="onPageChange(currentPage - 1)" 
+                [disabled]="currentPage === 1 || filteredData.length === 0" 
+                class="btn btn-secondary"
+              >
+                Previous
+              </button>
+              
+              <div *ngIf="totalPages > 1">
+                <button 
+                  *ngFor="let page of [].constructor(totalPages); let i = index" 
+                  (click)="onPageChange(i + 1)" 
+                  [ngClass]="{'btn-primary': currentPage === i + 1, 'btn-secondary': currentPage !== i + 1}"
+                  class="btn"
+                >
+                  {{ i + 1 }}
+                </button>
+              </div>
+            
+              <button
+                (click)="onPageChange(currentPage + 1)" 
+                [disabled]="currentPage === totalPages || filteredData.length === 0" 
+                class="btn btn-secondary"
+              >
+                Next
+              </button>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal" *ngIf="editData">
+              <div class="modal-content">
+                <h2>Edit Booking</h2>
+                <label>Name:
+                  <input [(ngModel)]="editData.name" class="form-control">
+                </label>
+                <label>Email:
+                  <input [(ngModel)]="editData.email" class="form-control">
+                </label>
+                <label>Date:
+                  <input type="text" [(ngModel)]="editData.dateStr" (ngModelChange)="updateEditDate()" placeholder="dd/mm/yyyy" class="form-control">
+                </label>
+                <button (click)="saveEdit()" class="btn btn-primary">Save</button>
+                <button (click)="closeEditModal()" class="btn btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

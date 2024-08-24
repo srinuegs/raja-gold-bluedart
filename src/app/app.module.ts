@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +20,7 @@ import { InternalusersComponent } from './Components/internalusers/internalusers
 import { BookingsComponent } from './Components/bookings/bookings.component';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { OrderFormComponent } from './Components/order-form/order-form.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -36,13 +39,18 @@ import { OrderFormComponent } from './Components/order-form/order-form.component
     InternalusersComponent,
     BookingsComponent,
     CustomersComponent,
-    OrderFormComponent
+    OrderFormComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    NgxPaginationModule,
+    ReactiveFormsModule, 
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
