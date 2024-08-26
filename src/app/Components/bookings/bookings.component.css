@@ -2,6 +2,7 @@
     max-width: 100%;
     margin: 20px auto;
     position: relative;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
   }
   
   table {
@@ -142,4 +143,21 @@
   }
   .btn:hover{
     background-color: #6CC3D5;
+  }
+  .exportButton{
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px; /* Optional: Adds space inside the container */
+    border: 1px solid #ddd; /* Optional: For visual demonstration */
+  }
+  
+  .left-div, .right-div {
+    padding: 10px; /* Optional: Adds padding inside the divs */
   }

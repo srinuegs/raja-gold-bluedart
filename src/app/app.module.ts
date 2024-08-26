@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpClientModule } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
