@@ -59,8 +59,10 @@ export interface BookingData {
     DestinationArea: string;
     DestinationLocation: string;
     PickupTokenNo: string;
+    ResponsePicupDate: string,
     TransactionAmount: string;
     WalletBalance: string;
+    AvailableBookingAmount: string,
     createdAt: string; // ISO Date String
     updatedAt: string; // ISO Date String
 }
@@ -92,13 +94,40 @@ export class BookingsComponent implements OnInit {
     constructor(private http: HttpClient, private apiService: ApiService) { }
 
     ngOnInit() {
-        this.loadData();
+        //this.loadData();
+        this.getBookingList();
     }
 
-    loadData(): void {
-        this.http.get<BookingData[]>('assets/masterdata1.json').subscribe(
-            (data) => {
-                this.originalData = data;
+    // loadData(): void {
+    //     this.http.get<BookingData[]>('assets/masterdata1.json').subscribe(
+    //         (data) => {
+    //             this.originalData = data;
+    //             this.updateDisplayedData();
+    //             console.log(this.originalData);  // To verify data loading
+    //         },
+    //         (error) => {
+    //             console.error('Error loading data', error);
+    //         }
+    //     );
+    // }
+    // refreshData(): void {
+    //         this.searchQuery = '';
+    //         this.filterDate = null; // or ''
+    //         this.updateDisplayedData();
+    //     }
+    // }
+    resetFilters(): void {
+        this.searchQuery = '';
+        this.filterDate = null; // or ''
+        this.updateDisplayedData();
+    }
+    getBookingList(): void {
+        this.apiService.getData<BookingData[]>().subscribe(
+            (response) => {
+                // console.log(JSON.stringify(response));
+                // console.log('Original data type:', typeof this.originalData);
+                // console.log('Original data value:', this.originalData);
+                this.originalData = response.message;
                 this.updateDisplayedData();
                 console.log(this.originalData);  // To verify data loading
             },
@@ -237,6 +266,16 @@ export class BookingsComponent implements OnInit {
         return number; // Assuming number is in correct format
     }
 
+    // Add or remove All item from table
+    toggleSelectAll(event: Event): void {
+        const isChecked = (event.target as HTMLInputElement).checked;
+        if (isChecked) {
+            this.displayedData.forEach(item => this.selectedItems.add(item.ReferenceNumber));
+        } else {
+            this.selectedItems.clear();
+        }
+    }
+
     // Add or remove item from selectedItems
     toggleSelection(item: BookingData): void {
         if (this.selectedItems.has(item.ReferenceNumber)) {
@@ -247,8 +286,8 @@ export class BookingsComponent implements OnInit {
     }
 
     // Handle checkbox selection
-    isSelected(item: BookingData): boolean {
-        return this.selectedItems.has(item.ReferenceNumber);
+    isAllSelected(): boolean {
+        return this.displayedData.every(item => this.selectedItems.has(item.ReferenceNumber));
     }
 
     onSelectionChange(item: BookingData, isChecked: boolean) {
@@ -319,10 +358,10 @@ export class BookingsComponent implements OnInit {
             'Destination Area': item.DestinationArea,
             'Destination Location': item.DestinationLocation,
             'Pick Up Token No': item.PickupTokenNo,
-            'Response Pickup Date': '',
+            'Response Pickup Date': item.ResponsePicupDate,
             'Transaction Amount': item.TransactionAmount,
             'Wallet Balance': item.WalletBalance,
-            'Available Booking Amount': ''
+            'Available Booking Amount': item.AvailableBookingAmount,
         }));
 
         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(preparedData);
@@ -335,38 +374,21 @@ export class BookingsComponent implements OnInit {
         saveAs(blob, fileName);
     }
 
+    // Uploading Excel for reading the data 
     onFileUpload(event: any) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-
-            // Handle the 'load' event for the FileReader
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-                // Convert the ArrayBuffer to a binary string
-                const arrayBuffer = e.target?.result as ArrayBuffer;
-                const binaryStr = this.arrayBufferToBinaryString(arrayBuffer);
-
-                // Parse the binary string using XLSX
+            reader.onload = (e: any) => {
+                const binaryStr = e.target.result;
                 const workbook = XLSX.read(binaryStr, { type: 'binary' });
                 const firstSheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert the worksheet to JSON
                 this.jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
                 this.requestData = this.apiService.convertArrayToObjects(this.jsonData);
-
                 console.log(this.requestData);
             };
-
-            // Read the file as an ArrayBuffer
-            reader.readAsArrayBuffer(file);
+            reader.readAsBinaryString(file);
         }
-    }
-
-    // Helper method to convert ArrayBuffer to binary string
-    private arrayBufferToBinaryString(buffer: ArrayBuffer): string {
-        const byteArray = new Uint8Array(buffer);
-        const charArray = Array.from(byteArray).map(byte => String.fromCharCode(byte));
-        return charArray.join('');
     }
 }

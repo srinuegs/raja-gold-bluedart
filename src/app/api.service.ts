@@ -31,10 +31,10 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   // Method to get data from the API
-  getData(): Observable<any> {
+  getData<ApiResponse>(): Observable<any> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/orders`);
   }
-
+  
   // Saving new record in Datase
   postData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
     return this.http.post<ApiResponse>(`${this.apiUrl}/order`, data);

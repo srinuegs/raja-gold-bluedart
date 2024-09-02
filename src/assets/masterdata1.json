@@ -55,7 +55,9 @@
   "DestinationLocation": "",
   "PickupTokenNo": "",
   "TransactionAmount": "",
+  "ResponsePicupDate":"",
   "WalletBalance": "",
+  "AvailableBookingAmount":"",
   "createdAt": "2024-09-02T06:14:29.000Z",
   "updatedAt": "2024-09-02T06:14:29.000Z"
 },
@@ -115,7 +117,9 @@
   "DestinationLocation": "",
   "PickupTokenNo": "",
   "TransactionAmount": "",
+  "ResponsePicupDate":"",
   "WalletBalance": "",
+  "AvailableBookingAmount":"",
   "createdAt": "2024-09-02T06:14:29.000Z",
   "updatedAt": "2024-09-02T06:14:29.000Z"
 }]
