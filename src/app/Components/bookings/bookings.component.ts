@@ -77,6 +77,7 @@ interface EditableBookingData extends BookingData {
     styleUrls: ['./bookings.component.css']
 })
 export class BookingsComponent implements OnInit {
+    isLoading$ = this.apiService.loading$;
     originalData: BookingData[] = [];
     displayedData: BookingData[] = [];
     requestData: any[] = [];
@@ -90,6 +91,7 @@ export class BookingsComponent implements OnInit {
     jsonData: any;
     uploadFilterDate: string = '';  // Date input bound to this property
     selectedItems: Set<number> = new Set<number>();
+    alert: ApiService | null = null;
 
     constructor(private http: HttpClient, private apiService: ApiService) { }
 
@@ -129,7 +131,7 @@ export class BookingsComponent implements OnInit {
                 // console.log('Original data value:', this.originalData);
                 this.originalData = response.message;
                 this.updateDisplayedData();
-                console.log(this.originalData);  // To verify data loading
+                console.log(this.originalData);
             },
             (error) => {
                 console.error('Error loading data', error);
@@ -231,6 +233,7 @@ export class BookingsComponent implements OnInit {
     closeEditModal() {
         this.editData = null;
     }
+
     updateEditDate() {
         if (this.editData) {
             const updatedDate = this.parseDate(this.editData.dateStr);
@@ -255,7 +258,7 @@ export class BookingsComponent implements OnInit {
     sendWhatsAppMessage(item: BookingData) {
         try {
             let phoneNumber = this.getPhoneNumber(item.ReceiverMobile);
-            const message = 'Hello, this is a test message from Angular!';
+            const message = 'Thanks for Ordering items from Raveendra Gold Covering Works \n Your Tracking ID : #78923652';
             this.apiService.sendMessage(phoneNumber, message);
         } catch (e) {
             console.error('Error sending message:', e);

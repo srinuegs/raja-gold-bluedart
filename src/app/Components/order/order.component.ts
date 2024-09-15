@@ -1,20 +1,29 @@
-// src/app/order-form/order-form.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../../api.service'; // Ensure correct import
+import { Alert, ApiService } from '../../api.service'; // Ensure correct import
+
 @Component({
-     selector: 'app-order-form',
-     templateUrl: './order-form.component.html',
-     styleUrls: ['./order-form.component.css']
+     selector: 'app-order',
+     templateUrl: './order.component.html',
+     styleUrls: ['./order.component.css']
 })
 export class OrderFormComponent implements OnInit {
      orderForm!: FormGroup;
      couriers: string[] = ['BlueDart'];
-
+     isLoading$ = this.apiService.loading$;
+     alert: Alert  | null = null;
      constructor(private fb: FormBuilder, private apiService: ApiService) { }
 
      ngOnInit(): void {
+          this.apiService.alert$.subscribe(alert => {
+               this.alert = alert;
+               if (alert) 
+               {
+                    setTimeout(() => {
+                         this.alert = null;
+                    }, 5000); // Auto-hide after 5 seconds
+               }
+             });
           this.orderForm = this.fb.group({
                courierList: ['BlueDart', [
                     Validators.required,
@@ -100,6 +109,11 @@ export class OrderFormComponent implements OnInit {
           });
      }
 
+     getAlertClass() {
+     if (!this.alert) return '';
+          return `alert-${this.alert.type}`;
+     }
+
      onSubmit(): void {
           if (this.orderForm.valid) {
                console.log(this.orderForm.value);
@@ -139,7 +153,7 @@ export class OrderFormComponent implements OnInit {
                     //SubProductCode: "P", // Defalut Value = "P", 
                     //PakType: request.body.PakType != null ? request.body.PakType : "", // Not Mandatory ---------------------------------------------------------- ?? Is this reffers to //"Product Code" 
                     PieceCount: this.orderForm.value.pieceCount != null ? this.orderForm.value.pieceCount : "",  // Need to Enter
-                    PickupDate: "2024-09-08", // conversionDateFormat(this.orderForm.value.pickupDate) != null ? conversionDateFormat(this.orderForm.value.pickupDate) : "", // Need to Enter
+                    PickupDate: conversionDateFormat(this.orderForm.value.pickupDate) != null ? conversionDateFormat(this.orderForm.value.pickupDate) : this.orderForm.value.pickupDate, // Need to Enter
                     PickupTime: convertTimeFormat(this.orderForm.value.pickupTime) != null ? convertTimeFormat(this.orderForm.value.pickupTime) : "", // Need to Enter
                     //BillingCustomerCode: 200034, //200034,
                     ActualWeight: this.orderForm.value.actualWeight != null ? this.orderForm.value.actualWeight : "", // Need to Enter
@@ -187,14 +201,25 @@ export class OrderFormComponent implements OnInit {
 
                this.apiService.postData(requestObject).subscribe(
                     (response) => {
-                         console.log('Data submitted:', response);
+                         this.apiService.showAlert({
+                              type: 'success',
+                              message: response.message
+                         });
                     },
                     (error) => {
                          console.error('Error submitting data:', error);
+                         this.apiService.showAlert({
+                              type: 'error',
+                              message: error
+                         });
                     }
                );
           } else {
                console.log('Form is invalid');
+               this.apiService.showAlert({
+                    type: 'error',
+                    message: 'Form is invalid'
+               });
           }
      }
 }

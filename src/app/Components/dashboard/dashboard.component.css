@@ -1,20 +1,73 @@
-.card-custom-1 { background-color: #f8d7da; } /* Light red */
-.card-custom-2 { background-color: #d4edda; } /* Light green */
-.card-custom-3 { background-color: #d1ecf1; } /* Light blue */
-.card-custom-4 { background-color: #fff3cd; } /* Light yellow */
-.dashboard-header {
-    background-color: #f8f9fa; /* Light grey background for the header */
-    padding: 15px;
-    border-radius: 5px; /* Rounded corners for the header */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
-}
-
-.dashboard-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
 .dashboard-header span {
     font-size: 1rem;
     color: #6c757d; /* Bootstrap secondary color */
+}
+.card {
+    border-radius: 0.5rem; /* Rounded corners for the cards */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Card shadow */
+  }
+  
+  .card-img-top {
+    border-bottom: 1px solid #ddd; /* Divider between image and body */
+  }
+  .flex-item {
+	color: #fff;
+	height: 210px;
+	margin: 10px 0;
+	padding: 0;
+	width: 225px;
+	position: relative;
+}
+.flex-item-inner {
+	display: flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-box;
+	display: -webkit-flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 210px;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+.flex-item-inner a {
+	color: #fff;
+	cursor: pointer;
+}
+.card-front,
+.card-back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 185px;
+	height: 170px;
+	padding: 20px;
+	margin: 0;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+	justify-content: flex-end;
+}
+.card-front i.tile-icon {
+	display: block;
+	margin: 10px auto 20px auto;
+	text-align: center;
+}
+
+/*-------- cards / flip effect --------*/
+.flex-item:hover .card-front {
+	-webkit-transform: rotateY(-180deg);
+	transform: rotateY(-180deg);
+}
+.flex-item:hover .card-back {
+	-webkit-transform: rotateY(0);
+	transform: rotateY(0);
+}
+.mojoIcon{
+    display: block;
+                margin: 10px auto 20px auto;
+                text-align: center;
 }

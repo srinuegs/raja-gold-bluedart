@@ -7,6 +7,42 @@ import { Component } from '@angular/core';
 })
 export class InternalusersComponent {
   isModalOpen: boolean = false;
+ originalData = [
+    {
+      "id": 1,
+      "Name": "Raju G",
+      "PhoneNumber": "9966961096",
+      "Gender": 'Male',
+      "Role": "Admin",
+      "Status":"Active"      
+    },
+    {
+      "id": 2,
+      "Name": "Ravi M",
+      "PhoneNumber": "8866961086",
+      "Gender": 'Male',
+      "Role": "Seller",
+      "Status":"Active"      
+    },
+    {
+      "id": 3,
+      "Name": "Rama G",
+      "PhoneNumber": "9966961096",
+      "Gender": 'Male',
+      "Role": "Seller",
+      "Status":"Active"      
+    },
+    {
+      "id": 4,
+      "Name": "Rao G",
+      "PhoneNumber": "9966961096",
+      "Gender": 'Male',
+      "Role": "Seller",
+      "Status":"Inactive"      
+    },
+    
+  ];
+
 
   openModal(): void {
     this.isModalOpen = true;
@@ -26,12 +62,6 @@ export class InternalusersComponent {
     const mobile = mobileInput.value;
     const gender = genderMale.checked ? 'Male' : (genderFemale.checked ? 'Female' : '');
     const type = typeInternal.checked ? 'Internal' : (typeExternal.checked ? 'External' : '');
-
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Mobile Number:', mobile);
-    console.log('Gender:', gender);
-    console.log('Type:', type);
 
     this.closeModal();
     

@@ -1,14 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('styles.css');
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;background-color: teal !important;overflow-x: hidden; }
 .dashboard-header {
     background-color: #f8f9fa; /* Light grey background for the header */
     padding: 15px;
     border-radius: 5px; /* Rounded corners for the header */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
+    
+}
+.scrollable-container {
+  height: 400px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
+/* WebKit Browsers (Chrome, Safari) */
+.scrollable-container::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the thumb on hover */
+}
+
+/* Firefox */
+.scrollable-container {
+  scrollbar-width: thin; /* Makes scrollbar thinner */
+  scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+}
 .dashboard-header h2 {
     margin: 0;
     font-size: 1.5rem;
@@ -23,7 +51,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-size: larger;
 }
 .py-11{
-    padding-top: 1rem !important;
+    /* padding-top: 1rem !important; */
     padding-bottom: 3rem !important;
 }
 .table-container {
@@ -45,15 +73,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   
   th {
     cursor: pointer;
-    background-color: #82C7B3 !important;
+    background-color: teal !important;
     text-align: center;
     color: #212529;
     text-align: -webkit-center;
-    font-size: medium;
+    font-weight: 500;
   }
   
   th:hover {
-    background-color:#82C7B3;
+    background-color:teal;
   }
   
   .pagination {
@@ -95,7 +123,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
   
   .modal-content input {
-    width: 100%;
     padding: 8px;
     margin-top: 5px;
     box-sizing: border-box;
@@ -172,4 +199,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     justify-content: center; /* Horizontally center */
     align-items: center; 
+  }
+  .loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }

@@ -11,14 +11,13 @@ import { BlogComponent } from './Components/blog/blog.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { InternalusersComponent } from './Components/internalusers/internalusers.component';
 import { BookingsComponent } from './Components/bookings/bookings.component';
-import { OrderFormComponent } from './Components/order-form/order-form.component';
+import { OrderFormComponent } from './Components/order/order.component';
 
 const routes: Routes = [
-  {path: '', redirectTo:'/dashboard', pathMatch: 'full'},
+  {path: '', redirectTo:'/bookings', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'products', component: ProductsComponent},
   {path: 'products', component: ProductsComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'contact', component: ContactComponent},
@@ -26,9 +25,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'internalusers', component: InternalusersComponent},
   {path: 'bookings', component: BookingsComponent},
-  {path: 'order-form', component: OrderFormComponent},
-
-
+  {path: 'order', component: OrderFormComponent},
   {path: '**', component: PagenotfoundComponent},
 ]
 @NgModule({

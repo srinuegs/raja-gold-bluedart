@@ -21,7 +21,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { InternalusersComponent } from './Components/internalusers/internalusers.component';
 import { BookingsComponent } from './Components/bookings/bookings.component';
 import { CustomersComponent } from './Components/customers/customers.component';
-import { OrderFormComponent } from './Components/order-form/order-form.component';
+import { OrderFormComponent } from './Components/order/order.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
