@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="container-m5 py-11" style="font-weight: 500">
-    <div *ngIf="isLoading$ | async" class="loader">
-        <div class="spinner"></div>
-    </div>
+   <div *ngIf="isLoading$ | async" class="loader">
+      <div class="spinner"></div>
+   </div>
    <div class="row d-flex justify-content-center">
       <div class="col-10">
          <div class="card" style="box-shadow: 2px 6px 11px 1px rgba(62, 62, 62, .21);">
@@ -10,14 +10,14 @@
                <div class="row mb-3">
                   <div class="col-md-3">
                      <label>Search:
-                     <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearch($event)"
-                     placeholder="Search..." class="form-control">
+                        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearch($event)"
+                           placeholder="Search..." class="form-control">
                      </label>
                   </div>
                   <div class="col-md-3">
                      <label>Date:
-                     <input type="date" [(ngModel)]="filterDate" (ngModelChange)="onDateChange()"
-                     placeholder="dd/mm/yyyy" class="form-control">
+                        <input type="date" [(ngModel)]="filterDate" (ngModelChange)="onDateChange()"
+                           placeholder="dd/mm/yyyy" class="form-control">
                      </label>
                   </div>
                   <div class="col-md-2">
@@ -26,16 +26,18 @@
                         <div>
                            <button type="button" (click)="fileInput.click()" class="exportButton">
                               Upload
-                              Excel 
+                              Excel
                               <span style="margin-left: 10px;">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-upload" viewBox="0 0 16 16">
+                                    <path
+                                       d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                    <path
+                                       d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
                                  </svg>
                               </span>
                            </button>
-                           <input #fileInput type="file" (change)="onFileUpload($event)"
-                           style="display: none;" />
+                           <input #fileInput type="file" (change)="onFileUpload($event)" style="display: none;" />
                         </div>
                      </label>
                   </div>
@@ -46,9 +48,12 @@
                            <button (click)="exportToExcel()" class="exportButton">
                               Export Excel
                               <span style="margin-left: 10px;">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-download" viewBox="0 0 16 16">
+                                    <path
+                                       d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                    <path
+                                       d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
                                  </svg>
                               </span>
                            </button>
@@ -62,9 +67,12 @@
                            <button (click)="resetFilters()" class="exportButton">
                               Reset Data
                               <span style="margin-left: 10px;">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
-                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                       d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                                    <path
+                                       d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
                                  </svg>
                               </span>
                            </button>
@@ -81,7 +89,8 @@
                         <thead>
                            <tr>
                               <th>
-                                 <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="isAllSelected()" />
+                                 <input type="checkbox" (change)="toggleSelectAll($event)"
+                                    [checked]="isAllSelected()" />
                               </th>
                               <th (click)="onSort('ReferenceNumber')">ID</th>
                               <th (click)="onSort('CompanyName')">Name</th>
@@ -95,18 +104,17 @@
                            <tr *ngFor="let item of displayedData">
                               <td>
                                  <input type="checkbox" [checked]="selectedItems.has(item.ReferenceNumber)"
-                                 (change)="toggleSelection(item)" />
+                                    (change)="toggleSelection(item)" />
                               </td>
-                              <td>{{ item.ReferenceNumber }}</td>
+                              <td>{{ "RVR"+item.ReferenceNumber }}</td>
                               <td>{{ item.CompanyName }}</td>
                               <td>{{ item.ReceiverName }}</td>
                               <td>{{ item.PickupDate | date:'dd/MM/yyyy' }}</td>
                               <td>{{ item.Status}}</td>
                               <td class="actionbutt">
                                  <div class="left-div" (click)="openEditModal(item)">
-                                    <svg
-                                       xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                       fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                       class="bi bi-pencil-square" viewBox="0 0 16 16">
                                        <path
                                           d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                        <path fill-rule="evenodd"
@@ -115,9 +123,8 @@
                                  </div>
                                  <div></div>
                                  <div class="right-div" (click)="sendWhatsAppMessage(item)">
-                                    <svg
-                                       xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                       fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                       class="bi bi-whatsapp" viewBox="0 0 16 16">
                                        <path
                                           d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
                                     </svg>
@@ -128,22 +135,21 @@
                      </table>
                      <div class="pagination" style="justify-content: center">
                         <button (click)="onPageChange(currentPage - 1)"
-                        [disabled]="currentPage === 1 || filteredData.length === 0"
-                        class="btn btn-secondary">
-                        Previous
+                           [disabled]="currentPage === 1 || filteredData.length === 0" class="btn btn-secondary">
+                           Previous
                         </button>
                         <div *ngIf="totalPages > 1">
                            <button *ngFor="let page of [].constructor(totalPages); let i = index"
-                           (click)="onPageChange(i + 1)"
-                           [ngClass]="{'btn-primary': currentPage === i + 1, 'btn-secondary': currentPage !== i + 1}"
-                           class="btn">
-                           {{ i + 1 }}
+                              (click)="onPageChange(i + 1)"
+                              [ngClass]="{'btn-primary': currentPage === i + 1, 'btn-secondary': currentPage !== i + 1}"
+                              class="btn">
+                              {{ i + 1 }}
                            </button>
                         </div>
                         <button (click)="onPageChange(currentPage + 1)"
-                        [disabled]="currentPage === totalPages || filteredData.length === 0"
-                        class="btn btn-secondary">
-                        Next
+                           [disabled]="currentPage === totalPages || filteredData.length === 0"
+                           class="btn btn-secondary">
+                           Next
                         </button>
                      </div>
                      <!-- Edit Modal -->
@@ -152,96 +158,97 @@
                            <h2>Edit Booking</h2>
                            <div class="row">
                               <div class="col-sm-4"> <label>Reference Number:
-                                 <input [(ngModel)]="editData.ReferenceNumber" class="form-control" disabled="">
+                                    <input [(ngModel)]="editData.ReferenceNumber" class="form-control" disabled="">
                                  </label>
                               </div>
                               <div class="col-sm-4"> <label>Company Name:
-                                 <input [(ngModel)]="editData.CompanyName" class="form-control">
+                                    <input [(ngModel)]="editData.CompanyName" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"><label>Delivery Address:
-                                 <input type="text" [(ngModel)]="editData.DeliveryAddress"
-                                 class="form-control">
+                                    <input type="text" [(ngModel)]="editData.DeliveryAddress" class="form-control">
                                  </label>
                               </div>
                            </div>
                            <div class="row">
                               <div class="col-sm-4"> <label>Delivery Pincode:
-                                 <input [(ngModel)]="editData.DeliveryPincode" class="form-control">
+                                    <input [(ngModel)]="editData.DeliveryPincode" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"> <label>Pickup Date:
-                                 <input type="date" [(ngModel)]="editData.PickupDate" (ngModelChange)="updateEditDate()" placeholder="dd/mm/yyyy"
-                                 class="form-control">
+                                    <input type="date" [(ngModel)]="editData.PickupDate"
+                                       (ngModelChange)="updateEditDate()" placeholder="dd/mm/yyyy" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"><label>Pickup Time:
-                                 <input type="text" [(ngModel)]="editData.PickupTime" class="form-control">
+                                    <input type="text" [(ngModel)]="editData.PickupTime" class="form-control">
                                  </label>
                               </div>
                            </div>
                            <div class="row">
                               <div class="col-sm-4"> <label>Actual Weight:
-                                 <input [(ngModel)]="editData.ActualWeight" class="form-control">
+                                    <input [(ngModel)]="editData.ActualWeight" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"><label>Piece Count:
-                                 <input type="text" [(ngModel)]="editData.PieceCount" class="form-control">
+                                    <input type="text" [(ngModel)]="editData.PieceCount" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"> <label>Declare Value:
-                                 <input [(ngModel)]="editData.DeclaredValue" class="form-control">
+                                    <input [(ngModel)]="editData.DeclaredValue" class="form-control">
                                  </label>
                               </div>
                            </div>
                            <div class="row">
                               <div class="col-sm-4"> <label>Length:
-                                 <input [(ngModel)]="editData.Length" class="form-control">
+                                    <input [(ngModel)]="editData.Length" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"> <label>Breadth:
-                                 <input [(ngModel)]="editData.Breath" class="form-control">
+                                    <input [(ngModel)]="editData.Breath" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"><label>Height:
-                                 <input type="text" [(ngModel)]="editData.Height" class="form-control">
+                                    <input type="text" [(ngModel)]="editData.Height" class="form-control">
                                  </label>
                               </div>
                            </div>
                            <div class="row">
                               <div class="col-sm-4"> <label>Sender Name:
-                                 <input [(ngModel)]="editData.Sender" class="form-control">
+                                    <input [(ngModel)]="editData.Sender" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"> <label>Sender Mobile:
-                                 <input [(ngModel)]="editData.SenderMobile" class="form-control">
+                                    <input [(ngModel)]="editData.SenderMobile" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"><label>Receiver Telephone:
-                                 <input type="text" [(ngModel)]="editData.ReceiverTelephone" class="form-control">
+                                    <input type="text" [(ngModel)]="editData.ReceiverTelephone" class="form-control">
                                  </label>
                               </div>
                            </div>
                            <div class="row">
                               <div class="col-sm-4"> <label>Receiver Name:
-                                 <input [(ngModel)]="editData.ReceiverName" class="form-control">
+                                    <input [(ngModel)]="editData.ReceiverName" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"> <label>Receiver Mobile:
-                                 <input [(ngModel)]="editData.ReceiverMobile" class="form-control">
+                                    <input [(ngModel)]="editData.ReceiverMobile" class="form-control">
                                  </label>
                               </div>
                               <div class="col-sm-4"><label>Receiver Email:
-                                 <input type="text" [(ngModel)]="editData.ReceiverEmailId" class="form-control">
+                                    <input type="text" [(ngModel)]="editData.ReceiverEmailId" class="form-control">
                                  </label>
                               </div>
                            </div>
                            <div class="row">
                               <div class="col-6">
-                                 <button (click)="saveEdit()" class="btn btn-primary" style="float: inline-end;">Save</button>
+                                 <button (click)="saveEdit()" class="btn btn-primary"
+                                    style="float: inline-end;">Save</button>
                               </div>
                               <div class="col-6">
-                                 <button (click)="closeEditModal()" class="btn btn-secondary" style="float: inline-start;">Cancel</button>
+                                 <button (click)="closeEditModal()" class="btn btn-secondary"
+                                    style="float: inline-start;">Cancel</button>
                               </div>
                            </div>
                         </div>
