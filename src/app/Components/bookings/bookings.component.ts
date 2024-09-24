@@ -86,7 +86,7 @@ export class BookingsComponent implements OnInit {
     searchQuery = '';
     filterDate: string | null = null;
     sortColumn: keyof BookingData = 'ReferenceNumber';
-    sortDirection: 'asc' | 'desc' = 'asc';
+    sortDirection: 'asc' | 'desc' = 'desc';
     editData: EditableBookingData | null = null;
     jsonData: any;
     uploadFilterDate: string = '';  // Date input bound to this property
@@ -94,30 +94,11 @@ export class BookingsComponent implements OnInit {
     alert: ApiService | null = null;
 
     constructor(private http: HttpClient, private apiService: ApiService) { }
-
+      
     ngOnInit() {
-        //this.loadData();
         this.getBookingList();
     }
 
-    // loadData(): void {
-    //     this.http.get<BookingData[]>('assets/masterdata1.json').subscribe(
-    //         (data) => {
-    //             this.originalData = data;
-    //             this.updateDisplayedData();
-    //             console.log(this.originalData);  // To verify data loading
-    //         },
-    //         (error) => {
-    //             console.error('Error loading data', error);
-    //         }
-    //     );
-    // }
-    // refreshData(): void {
-    //         this.searchQuery = '';
-    //         this.filterDate = null; // or ''
-    //         this.updateDisplayedData();
-    //     }
-    // }
     resetFilters(): void {
         this.searchQuery = '';
         this.filterDate = null; // or ''
@@ -126,9 +107,6 @@ export class BookingsComponent implements OnInit {
     getBookingList(): void {
         this.apiService.getData<BookingData[]>().subscribe(
             (response) => {
-                // console.log(JSON.stringify(response));
-                // console.log('Original data type:', typeof this.originalData);
-                // console.log('Original data value:', this.originalData);
                 this.originalData = response.message;
                 this.updateDisplayedData();
                 console.log(this.originalData);
@@ -223,7 +201,23 @@ export class BookingsComponent implements OnInit {
                         ...this.editData,
                         PickupDate: updatedDate.toISOString() // Ensure date is in ISO format
                     };
-                    this.updateDisplayedData();
+                    this.apiService.putData(this.originalData[index]).subscribe(
+                        (response) => {
+                             this.apiService.showAlert({
+                                  type: 'success',
+                                  message: response.message
+                             });
+                             this.getBookingList();
+                        },
+                        (error) => {
+                             console.error('Error submitting data:', error);
+                             this.apiService.showAlert({
+                                  type: 'error',
+                                  message: error
+                             });
+                        }
+                   );
+                   
                 }
             }
             this.editData = null;
@@ -300,19 +294,21 @@ export class BookingsComponent implements OnInit {
             this.selectedItems.delete(item.ReferenceNumber);
         }
     }
-
+    convertDateFormat(dateString: string): string {
+        const dateParts = dateString.split('-'); // Split the string into parts
+        return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Rearrange the parts
+      }
     exportToExcel(): void {
         const selectedData = this.originalData.filter(item => this.selectedItems.has(item.ReferenceNumber));
-
         if (selectedData.length === 0) {
             alert('No items selected for export.');
             return;
         }
-        const preparedData = selectedData.map(item => ({
-            'Reference No *': item.ReferenceNumber,
+        const preparedData = selectedData.map(item => ({           
+            'Reference No *': 'RVR'+item.ReferenceNumber,
             'Billing Area': item.BillingArea,
             'Billing Customer Code *': '200034',
-            'Pickup Date': item.PickupDate,
+            'Pickup Date': this.convertDateFormat(item.PickupDate),
             'Pickup Time': item.PickupTime,
             'Shipper Name': item.ShipperName,
             'Pickup Address *': item.PickupAddress,
@@ -361,7 +357,7 @@ export class BookingsComponent implements OnInit {
             'Destination Area': item.DestinationArea,
             'Destination Location': item.DestinationLocation,
             'Pick Up Token No': item.PickupTokenNo,
-            'Response Pickup Date': item.ResponsePicupDate,
+            'Response Pickup Date': "",
             'Transaction Amount': item.TransactionAmount,
             'Wallet Balance': item.WalletBalance,
             'Available Booking Amount': item.AvailableBookingAmount,

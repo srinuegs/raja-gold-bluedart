@@ -50,6 +50,13 @@ export class ApiService {
       finalize(() => this.hide()));
   }
 
+  // Update new record in Datase
+  putData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
+    this.show();
+    return this.http.put<ApiResponse>(`${this.apiUrl}/order`,data).pipe(
+      finalize(() => this.hide()));
+  }
+
   // Sending Trackit ID to User WhatsApp Mobile number 
   sendMessage(phoneNumber: string, message: string): void {
     const encodedMessage = encodeURIComponent(message);

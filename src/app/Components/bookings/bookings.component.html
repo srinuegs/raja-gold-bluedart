@@ -93,8 +93,8 @@
                                     [checked]="isAllSelected()" />
                               </th>
                               <th (click)="onSort('ReferenceNumber')">ID</th>
-                              <th (click)="onSort('CompanyName')">Name</th>
-                              <th (click)="onSort('ReceiverName')">Email</th>
+                              <th (click)="onSort('CompanyName')">Company Name</th>
+                              <th (click)="onSort('ReceiverName')">Receiver Name</th>
                               <th (click)="onSort('PickupDate')">Date</th>
                               <th (click)="onSort('Status')">Status</th>
                               <th>Actions</th>
@@ -161,14 +161,14 @@
                                     <input [(ngModel)]="editData.ReferenceNumber" class="form-control" disabled="">
                                  </label>
                               </div>
+                              <div class="col-sm-4"> <label>Shipper Name:
+                                    <input [(ngModel)]="editData.ShipperName" class="form-control">
+                                 </label>
+                              </div>
                               <div class="col-sm-4"> <label>Company Name:
-                                    <input [(ngModel)]="editData.CompanyName" class="form-control">
+                                 <input [(ngModel)]="editData.CompanyName" class="form-control">
                                  </label>
-                              </div>
-                              <div class="col-sm-4"><label>Delivery Address:
-                                    <input type="text" [(ngModel)]="editData.DeliveryAddress" class="form-control">
-                                 </label>
-                              </div>
+                              </div>                              
                            </div>
                            <div class="row">
                               <div class="col-sm-4"> <label>Delivery Pincode:
@@ -222,24 +222,20 @@
                                     <input [(ngModel)]="editData.SenderMobile" class="form-control">
                                  </label>
                               </div>
-                              <div class="col-sm-4"><label>Receiver Telephone:
-                                    <input type="text" [(ngModel)]="editData.ReceiverTelephone" class="form-control">
-                                 </label>
-                              </div>
-                           </div>
-                           <div class="row">
                               <div class="col-sm-4"> <label>Receiver Name:
-                                    <input [(ngModel)]="editData.ReceiverName" class="form-control">
-                                 </label>
-                              </div>
+                                 <input [(ngModel)]="editData.ReceiverName" class="form-control">
+                              </label>
+                           </div>
+                           </div>
+                           <div class="row">                              
                               <div class="col-sm-4"> <label>Receiver Mobile:
                                     <input [(ngModel)]="editData.ReceiverMobile" class="form-control">
                                  </label>
                               </div>
-                              <div class="col-sm-4"><label>Receiver Email:
-                                    <input type="text" [(ngModel)]="editData.ReceiverEmailId" class="form-control">
-                                 </label>
-                              </div>
+                              <div class="col-sm-4"><label>Delivery Address:
+                                 <input type="text" [(ngModel)]="editData.DeliveryAddress" class="form-control">
+                              </label>
+                           </div>
                            </div>
                            <div class="row">
                               <div class="col-6">

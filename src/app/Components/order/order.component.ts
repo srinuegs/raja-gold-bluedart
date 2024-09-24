@@ -25,7 +25,7 @@ export class OrderFormComponent implements OnInit {
                }
              });
           this.orderForm = this.fb.group({
-               courierList: ['BlueDart', [
+               courierList: ['', [
                     Validators.required,
                     Validators.maxLength(30),
                     Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
@@ -78,10 +78,10 @@ export class OrderFormComponent implements OnInit {
                     Validators.required,
                     Validators.pattern(/^\d{10}$/)  // 10 digits
                ]],
-               receiverTelephone: ['', [
-                    Validators.required,
-                    Validators.pattern(/^\d{10}$/)  // 10 digits
-               ]],
+               // receiverTelephone: ['', [
+               //      Validators.required,
+               //      Validators.pattern(/^\d{10}$/)  // 10 digits
+               // ]],
                receiverMobile: ['', [
                     Validators.required,
                     Validators.pattern(/^\d{10}$/)  // 10 digits
@@ -91,20 +91,20 @@ export class OrderFormComponent implements OnInit {
                     Validators.maxLength(30),
                     Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
                ]],
-               receiverEmail: ['', [
-                    Validators.required,
-                    Validators.email,
-                    Validators.maxLength(50)
-               ]],
-               maskedContactNo: ['', [
-                    Validators.required,
-                    Validators.maxLength(10),
-                    Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
-               ]],
+               // receiverEmail: ['', [
+               //      Validators.required,
+               //      Validators.email,
+               //      Validators.maxLength(50)
+               // ]],
+               // maskedContactNo: ['', [
+               //      Validators.required,
+               //      Validators.maxLength(10),
+               //      Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
+               // ]],
                deliveryAddress: ['', [
                     Validators.required,
                     Validators.maxLength(90),
-                    Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
+                    Validators.pattern(/^[a-zA-Z0-9./?;:,/-/'~!\r\n\\@\"#$%^&*()[\]=_ /-]*$/)
                ]]
           });
      }
@@ -153,7 +153,7 @@ export class OrderFormComponent implements OnInit {
                     //SubProductCode: "P", // Defalut Value = "P", 
                     //PakType: request.body.PakType != null ? request.body.PakType : "", // Not Mandatory ---------------------------------------------------------- ?? Is this reffers to //"Product Code" 
                     PieceCount: this.orderForm.value.pieceCount != null ? this.orderForm.value.pieceCount : "",  // Need to Enter
-                    PickupDate: conversionDateFormat(this.orderForm.value.pickupDate) != null ? conversionDateFormat(this.orderForm.value.pickupDate) : this.orderForm.value.pickupDate, // Need to Enter
+                    PickupDate: this.orderForm.value.pickupDate != null ? this.orderForm.value.pickupDate : "", // Need to Enter
                     PickupTime: convertTimeFormat(this.orderForm.value.pickupTime) != null ? convertTimeFormat(this.orderForm.value.pickupTime) : "", // Need to Enter
                     //BillingCustomerCode: 200034, //200034,
                     ActualWeight: this.orderForm.value.actualWeight != null ? this.orderForm.value.actualWeight : "", // Need to Enter
@@ -163,16 +163,16 @@ export class OrderFormComponent implements OnInit {
                     Breath: this.orderForm.value.breadth != null ? this.orderForm.value.breadth : "", // Need to Enter
                     Height: this.orderForm.value.height != null ? this.orderForm.value.height : "", // Need to Enter
                     ToPayCustomer: "", // Not Mandatory
-                    //Sender: this.orderForm.value.senderName != null ? this.orderForm.value.senderName : "",  // Not Mandatory
+                    Sender: this.orderForm.value.senderName != null ? this.orderForm.value.senderName : "",  // Not Mandatory
                     //VendorCode: request.body.VendorCode != null ? request.body.VendorCode : "",  // Not Mandatory
                     SenderMobile: this.orderForm.value.senderMobile != null ? this.orderForm.value.senderMobile : "", // Need to Enter
-                    ReceiverTelephone: this.orderForm.value.receiverTelephone != null ? this.orderForm.value.receiverTelephone : "",  // Not Mandatory
+                    ReceiverTelephone:  "",  // Not Mandatory
                     ReceiverMobile: this.orderForm.value.receiverMobile != null ? this.orderForm.value.receiverMobile : "", // Need to Enter
                     ReceiverName: this.orderForm.value.receiverName != null ? this.orderForm.value.receiverName : "", // Need to Enter
-                    ReceiverEmailId: this.orderForm.value.receiverEmail != null ? this.orderForm.value.receiverEmail : "", // Not Mandatory
+                    ReceiverEmailId: "", // Not Mandatory
                     ReceiverLatitude: "", // Not Mandatory
                     ReceiverLongitude: "", // Not Mandatory
-                    ReceiverMaskedContactNumber: this.orderForm.value.maskedContactNo != null ? this.orderForm.value.maskedContactNo : "",  // Not Mandatory
+                    ReceiverMaskedContactNumber: "",  // Not Mandatory
                     InvoiceNumber: "", // Not Mandatory
                     SpecialInstruction: "", // Not Mandatory
                     CollectableAmount: "", // Not Mandatory
@@ -237,10 +237,4 @@ function convertTimeFormat(data: string): string {
      }
 }
 
-function conversionDateFormat(data: string): string {
-     const date = new Date(data);
-     const day = date.getDate().toString().padStart(2, '0');
-     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-     const year = date.getFullYear();
-     return `${day}-${month}-${year}`;
-}
+
