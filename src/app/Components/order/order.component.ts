@@ -147,7 +147,7 @@ export class OrderFormComponent implements OnInit {
                     CreatedBy: "", // ------------------------------------------------------- ?? Login User Name
                     UpdatedBy: "", // ------------------------------------------------------- ?? Login User Name
                     CompanyName: this.orderForm.value.companyName != null ? this.orderForm.value.companyName : "", // Need to Enter
-                    DeviveryAddress: this.orderForm.value.deliveryAddress != null ? this.orderForm.value.deliveryAddress : "", // Need to Enter
+                    DeliveryAddress: this.orderForm.value.deliveryAddress != null ? this.orderForm.value.deliveryAddress : "", // Need to Enter
                     DeliveryPincode: this.orderForm.value.deliveryPincode != null ? this.orderForm.value.deliveryPincode : "",	// Need to Enter
                     //ProductType: "NDOX", // Defalut Value = "NDOX",
                     //SubProductCode: "P", // Defalut Value = "P", 
@@ -186,7 +186,7 @@ export class OrderFormComponent implements OnInit {
                     OTPBasedDelivery: "", // Not Mandatory
                     OfficeClosureTime: "", // Not Mandatory
                     AWBNo: "", // Not Mandatory
-                    Status: "", // Not Mandatory
+                    Status: "PENDING", // Not Mandatory
                     Message: "", // Not Mandatory
                     ClusterCode: "", // Not Mandatory
                     DestinationArea: "", // Not Mandatory

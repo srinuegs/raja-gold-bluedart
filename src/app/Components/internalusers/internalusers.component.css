@@ -215,7 +215,14 @@ button {
   height: 120px;
   animation: spin 2s linear infinite;
 }
-
+th {
+     cursor: pointer;
+     background-color: teal;
+     text-align: center;
+     color: hsl(210, 27%, 96%);
+     text-align: -webkit-center;
+     font-size: medium;
+   }
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

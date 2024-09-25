@@ -4,103 +4,114 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 export interface ApiResponse {
-  status: string;
-  message: string;
-  // Add other fields as per your API response structure
+     status: string;
+     message: string;
+     // Add other fields as per your API response structure
 }
 export interface BookingData {
-  id: number;
-  name: string;
-  email: string;
-  date: string;
-  contact:number;
+     id: number;
+     name: string;
+     email: string;
+     date: string;
+     contact: number;
 }
-export interface RequestObject  {
-  id: number;
-  name: string;
-  status: string | null;
-  generatedId: string | null;
+export interface RequestObject {
+     id: number;
+     name: string;
+     status: string | null;
+     generatedId: string | null;
 }
 
 export interface Alert {
-  type: 'success' | 'error' | 'info';
-  message: string;
+     type: 'success' | 'error' | 'info';
+     message: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+     providedIn: 'root'
 })
 
 export class ApiService {
-  private apiUrl = 'http://localhost:3090'; // Replace with your API URL
-  
-  constructor(private http: HttpClient) { }
+     private apiUrl = 'http://localhost:3090'; // Replace with your API URL
 
-  // Method to get data from the API
-  getData<ApiResponse>(): Observable<any> {
-    this.show();
-    return this.http.get<ApiResponse>(`${this.apiUrl}/orders`).pipe(
-      finalize(() => this.hide()));
-  }
-  
-  // Saving new record in Datase
-  postData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
-    this.show();
-    return this.http.post<ApiResponse>(`${this.apiUrl}/order`,data).pipe(
-      finalize(() => this.hide()));
-  }
+     constructor(private http: HttpClient) { }
 
-  // Update new record in Datase
-  putData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
-    this.show();
-    return this.http.put<ApiResponse>(`${this.apiUrl}/order`,data).pipe(
-      finalize(() => this.hide()));
-  }
+     // Method to get data from the API
+     getData<ApiResponse>(): Observable<any> {
+          this.show();
+          return this.http.get<ApiResponse>(`${this.apiUrl}/orders`).pipe(
+               finalize(() => this.hide()));
+     }
 
-  // Sending Trackit ID to User WhatsApp Mobile number 
-  sendMessage(phoneNumber: string, message: string): void {
-    const encodedMessage = encodeURIComponent(message);
-    const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.open(url, '_blank');
-  }
-  
-  //Conver Uploaded exce file to request object for saving the data in database
-  convertArrayToObjects(dataArray: any[][]): RequestObject[] {
-    // Extract headers from the first row
-    const headers = dataArray[0];
-    
-    // Convert the remaining rows to objects
-    const objectsArray = dataArray.slice(1).map(row => {
-      const obj: any = {};
-      row.forEach((value: any, index: number) => {
-        obj[headers[index]] = value;
-      });
-      return obj as RequestObject;
-    });
-    return objectsArray;
-  }
+     // Saving new record in Datase
+     postData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
+          this.show();
+          return this.http.post<ApiResponse>(`${this.apiUrl}/order`, data).pipe(
+               finalize(() => this.hide()));
+     }
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable();
+     // Update new record in Datase
+     putData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
+          this.show();
+          return this.http.put<ApiResponse>(`${this.apiUrl}/order`, data).pipe(
+               finalize(() => this.hide()));
+     }
 
-  show() {
-    this.loadingSubject.next(true);
-  }
+     // Update new record in Datase
+     updateStatus(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
+          this.show();
+          return this.http.put<ApiResponse>(`${this.apiUrl}/statusUpdate`, data).pipe(
+               finalize(() => this.hide()));
+     }
 
-  hide() {
-    this.loadingSubject.next(false);
-  }
+     // Sending Trackit ID to User WhatsApp Mobile number 
+     sendMessage(phoneNumber: string, message: string): void {
+          const encodedMessage = encodeURIComponent(message);
+          const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+          window.open(url, '_blank');
+     }
 
-  private alertSubject = new BehaviorSubject<Alert | null>(null);
-  alert$ = this.alertSubject.asObservable();
+     //Conver Uploaded exce file to request object for saving the data in database
+     convertArrayToObjects(dataArray: any[][], validIds: string[]): RequestObject[] {
+          // Extract headers from the first row
+          const headers = dataArray[0];
+          // Convert the remaining rows to objects
+          const objectsArray = dataArray.slice(1).map(row => {
+               const obj: any = {};
+               row.forEach((value: any, index: number) => {
+                    obj[headers[index]] = value;
+               });
+               const referenceNumber = obj["Reference No *"]; // Adjust the header name as necessary
+               if (validIds.includes(referenceNumber)) {
+                    return obj as RequestObject;
+               } else {
+                    return null; // Return null or handle as needed
+               }
+          });
+          return objectsArray.filter(item => item !== null) as RequestObject[];
+     }
 
-  showAlert(alert: Alert) {
-    this.alertSubject.next(alert);
-    // Auto-hide alert after 5 seconds
-    setTimeout(() => this.clearAlert(), 5000);
-  }
+     private loadingSubject = new BehaviorSubject<boolean>(false);
+     public loading$ = this.loadingSubject.asObservable();
 
-  clearAlert() {
-    this.alertSubject.next(null);
-  }
+     show() {
+          this.loadingSubject.next(true);
+     }
+
+     hide() {
+          this.loadingSubject.next(false);
+     }
+
+     private alertSubject = new BehaviorSubject<Alert | null>(null);
+     alert$ = this.alertSubject.asObservable();
+
+     showAlert(alert: Alert) {
+          this.alertSubject.next(alert);
+          // Auto-hide alert after 5 seconds
+          setTimeout(() => this.clearAlert(), 5000);
+     }
+
+     clearAlert() {
+          this.alertSubject.next(null);
+     }
 }

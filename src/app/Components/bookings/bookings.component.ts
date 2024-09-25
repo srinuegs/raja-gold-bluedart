@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import { HttpClient } from '@angular/common/http';
-import { ApiService } from '../../api.service';
+import {Alert, ApiService } from '../../api.service';
 
 export interface BookingData {
     ReferenceNumber: number;
@@ -91,11 +91,21 @@ export class BookingsComponent implements OnInit {
     jsonData: any;
     uploadFilterDate: string = '';  // Date input bound to this property
     selectedItems: Set<number> = new Set<number>();
-    alert: ApiService | null = null;
+    alert: Alert | null = null;
+    validIds: string[] = [];
 
     constructor(private http: HttpClient, private apiService: ApiService) { }
       
     ngOnInit() {
+     this.apiService.alert$.subscribe(alert => {
+          this.alert = alert;
+          if (alert) 
+          {
+               setTimeout(() => {
+                    this.alert = null;
+               }, 5000); // Auto-hide after 5 seconds
+          }
+        });
         this.getBookingList();
     }
 
@@ -124,8 +134,9 @@ export class BookingsComponent implements OnInit {
     get filteredData(): BookingData[] {
         let data = this.originalData.filter(item =>
             item.ReferenceNumber.toString().toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            item.CompanyName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            item.ReceiverName.toLowerCase().includes(this.searchQuery.toLowerCase())
+            item.ReceiverMobile.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.ReceiverName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.Status.toLowerCase().includes(this.searchQuery.toLowerCase())            
         );
 
         if (this.filterDate) {
@@ -155,11 +166,12 @@ export class BookingsComponent implements OnInit {
         const startIndex = (this.currentPage - 1) * this.pageSize;
         const endIndex = startIndex + this.pageSize;
         this.displayedData = this.filteredData.slice(startIndex, endIndex);
-        console.log(this.displayedData);
+        //console.log(this.displayedData);
     }
 
     onSearch(query: string) {
         this.searchQuery = query;
+        console.log(this.searchQuery);
         this.updateDisplayedData();
     }
 
@@ -294,10 +306,12 @@ export class BookingsComponent implements OnInit {
             this.selectedItems.delete(item.ReferenceNumber);
         }
     }
+
     convertDateFormat(dateString: string): string {
         const dateParts = dateString.split('-'); // Split the string into parts
         return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Rearrange the parts
-      }
+    }
+
     exportToExcel(): void {
         const selectedData = this.originalData.filter(item => this.selectedItems.has(item.ReferenceNumber));
         if (selectedData.length === 0) {
@@ -384,10 +398,44 @@ export class BookingsComponent implements OnInit {
                 const firstSheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[firstSheetName];
                 this.jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-                this.requestData = this.apiService.convertArrayToObjects(this.jsonData);
+                this.validIds = this.jsonData.slice(1) // Skip headers
+                .map((row: any[]) => row[0]) // Assuming the first column contains the ID (adjust index as needed)
+                .filter((ReferenceNumber: string) => ReferenceNumber); // Filter out any undefined or empty values
+                this.requestData = this.apiService.convertArrayToObjects(this.jsonData,  this.validIds);
                 console.log(this.requestData);
+                this.uploadData(this.requestData);
+
             };
-            reader.readAsBinaryString(file);
+            reader.readAsBinaryString(file);    
         }
+    }
+    prepareRequestObjects(data: any[]): { AWBNO: string; Status: string; Message: string; ReferenceNumber: string }[] {
+        return data.map(item => ({
+            AWBNO: item["AWB No"] || "", // Use the appropriate field for AWB number
+            Status: item["Status"] || "", // Use the appropriate field for Status
+            Message: item["Message"] || "", // Use the appropriate field for Message
+            ReferenceNumber: item["Reference No *"].replace("RVR", "") || "" // Use the appropriate field for ReferenceNumber
+        }));
+    }
+
+    uploadData(data: BookingData[]) {
+        const requestObjects = this.prepareRequestObjects(data);
+        console.log(requestObjects);
+
+        this.apiService.updateStatus(requestObjects).subscribe(
+            (response) => {
+                 this.apiService.showAlert({
+                      type: 'success',
+                      message: response.message
+                 });
+            },
+            (error) => {
+                 console.error('Error updating data:', error);
+                 this.apiService.showAlert({
+                      type: 'error',
+                      message: error
+                 });
+            }
+       );
     }
 }

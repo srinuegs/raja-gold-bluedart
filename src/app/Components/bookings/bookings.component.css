@@ -162,7 +162,31 @@
     padding: 10px; /* Optional: Adds space inside the container */
     border: 1px solid #ddd; /* Optional: For visual demonstration */
   }
-  
+  .alert {
+     position: fixed;
+     bottom: 20px;
+     right: 20px;
+     padding: 15px;
+     margin: 0;
+     border-radius: 5px;
+     color: #fff;
+     font-size: 16px;
+     z-index: 1000; /* Ensure alert is above other elements */
+     max-width: 300px; /* Optional: limit the width */
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: add shadow for better visibility */
+     transition: opacity 0.3s ease, transform 0.3s ease;
+   }
+   .alert-success {
+     background-color: #4caf50;
+   }
+   
+   .alert-error {
+     background-color: #f44336;
+   }
+   
+   .alert-info {
+     background-color: #2196f3;
+   }
   .left-div, .right-div {
     padding: 10px; /* Optional: Adds padding inside the divs */
   }

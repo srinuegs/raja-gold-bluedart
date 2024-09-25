@@ -93,8 +93,8 @@
                                     [checked]="isAllSelected()" />
                               </th>
                               <th (click)="onSort('ReferenceNumber')">ID</th>
-                              <th (click)="onSort('CompanyName')">Company Name</th>
                               <th (click)="onSort('ReceiverName')">Receiver Name</th>
+                              <th (click)="onSort('ReceiverMobile')">Receiver Mobile</th>
                               <th (click)="onSort('PickupDate')">Date</th>
                               <th (click)="onSort('Status')">Status</th>
                               <th>Actions</th>
@@ -107,8 +107,8 @@
                                     (change)="toggleSelection(item)" />
                               </td>
                               <td>{{ "RVR"+item.ReferenceNumber }}</td>
-                              <td>{{ item.CompanyName }}</td>
                               <td>{{ item.ReceiverName }}</td>
+                              <td>{{ item.ReceiverMobile }}</td>
                               <td>{{ item.PickupDate | date:'dd/MM/yyyy' }}</td>
                               <td>{{ item.Status}}</td>
                               <td class="actionbutt">
@@ -232,19 +232,23 @@
                                     <input [(ngModel)]="editData.ReceiverMobile" class="form-control">
                                  </label>
                               </div>
-                              <div class="col-sm-4"><label>Delivery Address:
-                                 <input type="text" [(ngModel)]="editData.DeliveryAddress" class="form-control">
+                              <div class="col-sm-8"><label>Delivery Address:
+                                 <input type="text" [(ngModel)]="editData.DeliveryAddress" class="form-control" style="width: -webkit-fill-available;">
                               </label>
                            </div>
                            </div>
                            <div class="row">
-                              <div class="col-6">
-                                 <button (click)="saveEdit()" class="btn btn-primary"
-                                    style="float: inline-end;">Save</button>
+                              <div class="col-8">
+                                 
                               </div>
-                              <div class="col-6">
-                                 <button (click)="closeEditModal()" class="btn btn-secondary"
-                                    style="float: inline-start;">Cancel</button>
+                              <div class="col-4 d-flex justify-content-end">
+                                   <div class="col-6" *ngIf="editData.Status !== 'SUCCESS'">
+                                        <button (click)="saveEdit()" class="btn btn-primary" style="float: inline-end;">Save</button>
+                                   </div>
+                                   <div class="col-6">
+                                   <button (click)="closeEditModal()" class="btn btn-secondary"
+                                        style="float: inline-start;">Cancel</button>
+                                   </div>
                               </div>
                            </div>
                         </div>
