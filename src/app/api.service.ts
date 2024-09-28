@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
 export interface ApiResponse {
      status: string;
      message: string;
-     // Add other fields as per your API response structure
 }
 export interface BookingData {
      id: number;
@@ -36,38 +36,45 @@ export class ApiService {
 
      constructor(private http: HttpClient) { }
 
-     // Method to get data from the API
+     // Getting Orders List
      getData<ApiResponse>(): Observable<any> {
           this.show();
           return this.http.get<ApiResponse>(`${this.apiUrl}/orders`).pipe(
                finalize(() => this.hide()));
      }
 
-     // Saving new record in Datase
+     // Placing Order or Creating Orders
      postData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
           this.show();
           return this.http.post<ApiResponse>(`${this.apiUrl}/order`, data).pipe(
                finalize(() => this.hide()));
      }
 
-     // Update new record in Datase
+     // Update Order record in Datase
      putData(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
           this.show();
           return this.http.put<ApiResponse>(`${this.apiUrl}/order`, data).pipe(
                finalize(() => this.hide()));
      }
 
-     // Update new record in Datase
+     // Update Order record based on Stats in Datase
      updateStatus(data: any): Observable<ApiResponse> { // Specify ApiResponse as the type
           this.show();
           return this.http.put<ApiResponse>(`${this.apiUrl}/statusUpdate`, data).pipe(
                finalize(() => this.hide()));
      }
 
+     // Getting Consolidated report for Dash Board
+     getReports<ApiResponse>(): Observable<any> {
+          this.show();
+          return this.http.get<ApiResponse>(`${this.apiUrl}/getReports`).pipe(
+               finalize(() => this.hide()));
+     }
+
      // Sending Trackit ID to User WhatsApp Mobile number 
      sendMessage(phoneNumber: string, message: string): void {
           const encodedMessage = encodeURIComponent(message);
-          const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+          const url = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
           window.open(url, '_blank');
      }
 
@@ -81,11 +88,11 @@ export class ApiService {
                row.forEach((value: any, index: number) => {
                     obj[headers[index]] = value;
                });
-               const referenceNumber = obj["Reference No *"]; // Adjust the header name as necessary
+               const referenceNumber = obj["Reference No *"];
                if (validIds.includes(referenceNumber)) {
                     return obj as RequestObject;
                } else {
-                    return null; // Return null or handle as needed
+                    return null; 
                }
           });
           return objectsArray.filter(item => item !== null) as RequestObject[];
@@ -103,6 +110,7 @@ export class ApiService {
      }
 
      private alertSubject = new BehaviorSubject<Alert | null>(null);
+
      alert$ = this.alertSubject.asObservable();
 
      showAlert(alert: Alert) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Alert, ApiService } from '../../api.service'; // Ensure correct import
+import { Alert, ApiService } from '../../api.service';
 
 @Component({
      selector: 'app-order',
@@ -9,7 +9,6 @@ import { Alert, ApiService } from '../../api.service'; // Ensure correct import
 })
 export class OrderFormComponent implements OnInit {
      orderForm!: FormGroup;
-     couriers: string[] = ['BlueDart'];
      isLoading$ = this.apiService.loading$;
      alert: Alert  | null = null;
      constructor(private fb: FormBuilder, private apiService: ApiService) { }
@@ -116,46 +115,17 @@ export class OrderFormComponent implements OnInit {
 
      onSubmit(): void {
           if (this.orderForm.valid) {
-               console.log(this.orderForm.value);
 
-               // let requestObject = {
-               //   "courierList": this.orderForm.value.courierList,
-               //   "pickupDate": conversionDateFormat(this.orderForm.value.pickupDate),
-               //   "pickupTime": convertTimeFormat(this.orderForm.value.pickupTime),
-               //   "companyName": this.orderForm.value.companyName,
-               //   "deliveryPincode": this.orderForm.value.deliveryPincode,
-               //   "pieceCount": this.orderForm.value.pieceCount,
-               //   "actualWeight": this.orderForm.value.actualWeight,
-               //   "declareValue": this.orderForm.value.declareValue,
-               //   "length": this.orderForm.value.length,
-               //   "breadth": this.orderForm.value.breadth,
-               //   "height": this.orderForm.value.height,
-               //   "senderName": this.orderForm.value.senderName,
-               //   "senderMobile": this.orderForm.value.senderMobile,
-               //   "receiverTelephone": this.orderForm.value.receiverTelephone,
-               //   "receiverMobile": this.orderForm.value.receiverMobile,
-               //   "receiverName": this.orderForm.value.receiverName,
-               //   "receiverEmail": this.orderForm.value.receiverEmail,
-               //   "maskedContactNo": this.orderForm.value.maskedContactNo,
-               //   "deliveryAddress": this.orderForm.value.deliveryAddress
-               // };
                let requestObject = {
-                    //BillingArea: "MLM", // Defalut Value = "MLM"
                     ShipperName: this.orderForm.value.courierList != null ? this.orderForm.value.courierList : "", // Need to enter
-                    //PickupAddress: "plat no 396 mij park,machilipatnam", // Defalut Value = "plat no 396 mij park,machilipatnam", 
-                    //PickupPincode: 521001, // Defalut Value = 521001
                     CreatedBy: "", // ------------------------------------------------------- ?? Login User Name
                     UpdatedBy: "", // ------------------------------------------------------- ?? Login User Name
                     CompanyName: this.orderForm.value.companyName != null ? this.orderForm.value.companyName : "", // Need to Enter
                     DeliveryAddress: this.orderForm.value.deliveryAddress != null ? this.orderForm.value.deliveryAddress : "", // Need to Enter
                     DeliveryPincode: this.orderForm.value.deliveryPincode != null ? this.orderForm.value.deliveryPincode : "",	// Need to Enter
-                    //ProductType: "NDOX", // Defalut Value = "NDOX",
-                    //SubProductCode: "P", // Defalut Value = "P", 
-                    //PakType: request.body.PakType != null ? request.body.PakType : "", // Not Mandatory ---------------------------------------------------------- ?? Is this reffers to //"Product Code" 
                     PieceCount: this.orderForm.value.pieceCount != null ? this.orderForm.value.pieceCount : "",  // Need to Enter
                     PickupDate: this.orderForm.value.pickupDate != null ? this.orderForm.value.pickupDate : "", // Need to Enter
                     PickupTime: convertTimeFormat(this.orderForm.value.pickupTime) != null ? convertTimeFormat(this.orderForm.value.pickupTime) : "", // Need to Enter
-                    //BillingCustomerCode: 200034, //200034,
                     ActualWeight: this.orderForm.value.actualWeight != null ? this.orderForm.value.actualWeight : "", // Need to Enter
                     DeclaredValue: this.orderForm.value.declareValue != null ? this.orderForm.value.declareValue : "", // Need to Enter
                     RegisterPickup: "", // Need to Enter
@@ -164,7 +134,6 @@ export class OrderFormComponent implements OnInit {
                     Height: this.orderForm.value.height != null ? this.orderForm.value.height : "", // Need to Enter
                     ToPayCustomer: "", // Not Mandatory
                     Sender: this.orderForm.value.senderName != null ? this.orderForm.value.senderName : "",  // Not Mandatory
-                    //VendorCode: request.body.VendorCode != null ? request.body.VendorCode : "",  // Not Mandatory
                     SenderMobile: this.orderForm.value.senderMobile != null ? this.orderForm.value.senderMobile : "", // Need to Enter
                     ReceiverTelephone:  "",  // Not Mandatory
                     ReceiverMobile: this.orderForm.value.receiverMobile != null ? this.orderForm.value.receiverMobile : "", // Need to Enter
@@ -186,7 +155,7 @@ export class OrderFormComponent implements OnInit {
                     OTPBasedDelivery: "", // Not Mandatory
                     OfficeClosureTime: "", // Not Mandatory
                     AWBNo: "", // Not Mandatory
-                    Status: "PENDING", // Not Mandatory
+                    Status: "", // Not Mandatory
                     Message: "", // Not Mandatory
                     ClusterCode: "", // Not Mandatory
                     DestinationArea: "", // Not Mandatory

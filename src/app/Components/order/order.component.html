@@ -16,16 +16,6 @@
                      <div class="form-column">
                         <!-- Courier List -->
                         <div class="form-group">
-                           <!-- <label for="courierList">Courier List *</label>
-                           <input id="courierList" value="BlueDart" formControlName="courierList" maxlength="30">
-                           <div *ngIf="orderForm.get('courierList')?.invalid && orderForm.get('courierList')?.touched"
-                              class="error-message">
-                              <div *ngIf="orderForm.get('courierList')?.errors?.['required']">Courier List is required.
-                              </div>
-                              <div *ngIf="orderForm.get('courierList')?.errors?.['maxlength']">Maximum length is 30
-                                 characters.</div>
-                              <div *ngIf="orderForm.get('courierList')?.errors?.['pattern']">Invalid characters.</div>
-                           </div> -->
                            <label for="courierList">Shipper Name *</label>
                            <input id="courierList" formControlName="courierList" maxlength="30">
                            <div *ngIf="orderForm.get('courierList')?.invalid && orderForm.get('courierList')?.touched"
@@ -218,24 +208,6 @@
                            </div>
                         </div>
                      </div>
-                     <!-- Receiver Telephone
-                     <div class="form-column">
-                        <div class="form-group">
-                           <label for="receiverTelephone">Receiver Telephone *</label>
-                           <input id="receiverTelephone" type="number" formControlName="receiverTelephone"
-                              maxlength="10">
-                           <div
-                              *ngIf="orderForm.get('receiverTelephone')?.invalid && orderForm.get('receiverTelephone')?.touched"
-                              class="error-message">
-                              <div *ngIf="orderForm.get('receiverTelephone')?.errors?.['required']">Receiver Telephone
-                                 is required.</div>
-                              <div *ngIf="orderForm.get('receiverTelephone')?.errors?.['maxlength']">Maximum length is
-                                 10 digits.</div>
-                              <div *ngIf="orderForm.get('receiverTelephone')?.errors?.['pattern']">Invalid telephone
-                                 number. Must be 10 digits.</div>
-                           </div>
-                        </div>
-                     </div> -->
                      <!-- Receiver Mobile -->
                      <div class="form-column">
                         <div class="form-group">
@@ -268,39 +240,6 @@
                            </div>
                         </div>
                      </div>
-                     <!-- Receiver Email
-                     <div class="form-column">
-                        <div class="form-group">
-                           <label for="receiverEmail">Receiver Email *</label>
-                           <input id="receiverEmail" formControlName="receiverEmail" maxlength="50" type="email">
-                           <div
-                              *ngIf="orderForm.get('receiverEmail')?.invalid && orderForm.get('receiverEmail')?.touched"
-                              class="error-message">
-                              <div *ngIf="orderForm.get('receiverEmail')?.errors?.['required']">Receiver Email is
-                                 required.</div>
-                              <div *ngIf="orderForm.get('receiverEmail')?.errors?.['maxlength']">Maximum length is 50
-                                 characters.</div>
-                              <div *ngIf="orderForm.get('receiverEmail')?.errors?.['email']">Invalid email format.</div>
-                           </div>
-                        </div>
-                     </div>  -->
-                     <!-- Masked Contact No
-                     <div class="form-column">
-                        <div class="form-group">
-                           <label for="maskedContactNo">Masked Contact No *</label>
-                           <input id="maskedContactNo" type="number" formControlName="maskedContactNo" maxlength="10">
-                           <div
-                              *ngIf="orderForm.get('maskedContactNo')?.invalid && orderForm.get('maskedContactNo')?.touched"
-                              class="error-message">
-                              <div *ngIf="orderForm.get('maskedContactNo')?.errors?.['required']">Masked Contact No is
-                                 required.</div>
-                              <div *ngIf="orderForm.get('maskedContactNo')?.errors?.['maxlength']">Maximum length is 10
-                                 characters.</div>
-                              <div *ngIf="orderForm.get('maskedContactNo')?.errors?.['pattern']">Invalid characters.
-                              </div>
-                           </div>
-                        </div>
-                     </div> -->
                      <!-- Delivery Address -->
                      <div>
                         <div class="form-group">
