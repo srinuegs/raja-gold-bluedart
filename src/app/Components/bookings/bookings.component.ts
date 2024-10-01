@@ -240,11 +240,11 @@ export class BookingsComponent implements OnInit {
                          };
                          this.apiService.putData(this.originalData[index]).subscribe(
                          (response) => {
-                              this.getBookingList();
                               this.apiService.showAlert({
                                    type: 'success',
                                    message: response.message
                               });
+                              this.getBookingList();
                          },
                          (error) => {
                               console.error('Error submitting data:', error);
@@ -289,9 +289,8 @@ export class BookingsComponent implements OnInit {
      sendWhatsAppMessage(item: BookingData) {
           try {
                let TrackingID = item.AWBNo;
-               console.log(TrackingID);
                let phoneNumber = this.getPhoneNumber(item.ReceiverMobile);
-               const message = 'Thanks for Ordering items from Raveendra Gold Covering Works \n Your Tracking ID :'+item.AWBNo;
+               const message = 'Thanks for Ordering items from "Raveendra Gold Covering Works" Your Tracking ID :' +item.AWBNo+' for  the name konda divya'+ item.ReceiverMobile ;
                this.apiService.sendMessage(phoneNumber, message);
           } catch (e) {
                console.error('Error sending message:', e);
@@ -350,7 +349,7 @@ export class BookingsComponent implements OnInit {
                return;
           }
           const preparedData = selectedData.map(item => ({           
-               'Reference No *': 'RVR'+item.ReferenceNumber,
+               'Reference No *': 'RVR '+item.ReferenceNumber,
                'Billing Area': item.BillingArea,
                'Billing Customer Code *': '200034',
                'Pickup Date': this.convertDateFormat(item.PickupDate),
@@ -383,7 +382,7 @@ export class BookingsComponent implements OnInit {
                'Receiver Latitude': item.ReceiverLatitude,
                'Receiver Longitude': item.ReceiverLongitude,
                'Receiver Masked Contact Number': item.ReceiverMaskedContactNumber,
-               'Invoice Number': item.InvoiceNumber,
+               'Invoice Number': 'RVR'+item.ReferenceNumber,
                'Special Instruction': item.SpecialInstruction,
                'Collectable Amount': item.CollectableAmount,
                'Commodity Detail 1': item.CommodityDetail1,
@@ -413,9 +412,19 @@ export class BookingsComponent implements OnInit {
           XLSX.utils.book_append_sheet(wb, ws, 'Waybill');
 
           const wbout: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-          const fileName = 'data.xlsx';
+          const fileName = this.getFormattedDate()+'.xlsx';
           const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           saveAs(blob, fileName);
+     }
+
+     // Generating FileName
+     getFormattedDate(): string {
+          const date = new Date();
+          const day = String(date.getDate()).padStart(2, '0'); // Get day and pad with zero if needed
+          const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+          const year = date.getFullYear();
+          
+          return `${day}-${month}-${year}`;
      }
 
      // Importing Excel for reading the Status orders 
@@ -442,9 +451,9 @@ export class BookingsComponent implements OnInit {
      }
 
      // Generating Request object for saving records
-     prepareRequestObjects(data: any[]): { AWBNO: string; Status: string; Message: string; ReferenceNumber: string }[] {
+     prepareRequestObjects(data: any[]): { AWBNo: string; Status: string; Message: string; ReferenceNumber: string }[] {
           return data.map(item => ({
-               AWBNO: item["AWB No"] || "", // Use the appropriate field for AWB number
+               AWBNo: item["AWB No"] || "", // Use the appropriate field for AWB number
                Status: item["Status"] || "", // Use the appropriate field for Status
                Message: item["Message"] || "", // Use the appropriate field for Message
                ReferenceNumber: item["Reference No *"].replace("RVR", "") || "" // Use the appropriate field for ReferenceNumber

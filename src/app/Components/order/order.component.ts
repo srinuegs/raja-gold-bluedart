@@ -13,6 +13,7 @@ export class OrderFormComponent implements OnInit {
      alert: Alert  | null = null;
      constructor(private fb: FormBuilder, private apiService: ApiService) { }
 
+     // Calling function on page load
      ngOnInit(): void {
           this.apiService.alert$.subscribe(alert => {
                this.alert = alert;
@@ -29,7 +30,7 @@ export class OrderFormComponent implements OnInit {
                     Validators.maxLength(30),
                     Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
                ]],
-               pickupDate: ['', [
+               pickupDate: ['19:00', [
                     Validators.required,
                ]],
                pickupTime: ['', [
@@ -69,9 +70,9 @@ export class OrderFormComponent implements OnInit {
                     Validators.pattern(/^\d{1,6}(\.\d{1,2})?$/)  // 0 to 999999.99
                ]],
                senderName: ['', [
-                    Validators.required,
-                    Validators.maxLength(20),
-                    Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
+                    // Validators.required,
+                    // Validators.maxLength(20),
+                    // Validators.pattern(/^[a-zA-Z0-9./?;:'~!\\@\"#$%^&*()[\]=_ /-]*$/)
                ]],
                senderMobile: ['', [
                     Validators.required,
@@ -108,11 +109,13 @@ export class OrderFormComponent implements OnInit {
           });
      }
 
+     // Calling alerting message 
      getAlertClass() {
      if (!this.alert) return '';
           return `alert-${this.alert.type}`;
      }
 
+     // Saving Order Form data
      onSubmit(): void {
           if (this.orderForm.valid) {
 
@@ -125,7 +128,7 @@ export class OrderFormComponent implements OnInit {
                     DeliveryPincode: this.orderForm.value.deliveryPincode != null ? this.orderForm.value.deliveryPincode : "",	// Need to Enter
                     PieceCount: this.orderForm.value.pieceCount != null ? this.orderForm.value.pieceCount : "",  // Need to Enter
                     PickupDate: this.orderForm.value.pickupDate != null ? this.orderForm.value.pickupDate : "", // Need to Enter
-                    PickupTime: convertTimeFormat(this.orderForm.value.pickupTime) != null ? convertTimeFormat(this.orderForm.value.pickupTime) : "", // Need to Enter
+                    PickupTime: 1900, // Need to Enter
                     ActualWeight: this.orderForm.value.actualWeight != null ? this.orderForm.value.actualWeight : "", // Need to Enter
                     DeclaredValue: this.orderForm.value.declareValue != null ? this.orderForm.value.declareValue : "", // Need to Enter
                     RegisterPickup: "", // Need to Enter
@@ -193,6 +196,7 @@ export class OrderFormComponent implements OnInit {
      }
 }
 
+// COnverting Date Formate
 function convertTimeFormat(data: string): string {
      const timePattern = /^(\d{2}):(\d{2})$/;
      const match = data.match(timePattern);

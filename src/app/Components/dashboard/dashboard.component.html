@@ -1,5 +1,8 @@
     <app-header></app-header>
     <div class="container-m5 py-11">
+     <div *ngIf="isLoading$ | async" class="loader">
+          <div class="spinner"></div>
+       </div>
       <div class="row d-flex justify-content-center">
         <div class="col-10">
            <div class="card" style="box-shadow: 2px 6px 11px 1px rgba(62, 62, 62, .21);">

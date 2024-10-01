@@ -14,6 +14,7 @@ export interface ReportData {
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'], // Fixed typo from 'styleUrl' to 'styleUrls'
 })
+
 export class DashboardComponent implements OnInit {
      displayedData: ReportData = {
           totalOrders: 0,
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit {
 
     constructor(private http: HttpClient, private apiService: ApiService) { }
 
+    // Calling Initiate function
     ngOnInit() {
         this.apiService.alert$.subscribe(alert => {
             this.alert = alert;
@@ -38,9 +40,11 @@ export class DashboardComponent implements OnInit {
         this.getReport();
     }
 
+    // generating Report for the current Month
     getReport(): void {
         this.apiService.getReports<ReportData[]>().subscribe(
             (response) => {
+               console.log(response);
                if (response && response.message && response.message.counts) {
                     this.displayedData = response.message.counts; // Assign the counts directly
                 } else {

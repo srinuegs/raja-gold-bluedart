@@ -148,7 +148,7 @@ button {
   font-size: 0.875em;
 }
 .btn:hover {
-  background-color: #212529;
+  background-color: teal !important;
 }
 .exportButton {
   width: 100%;

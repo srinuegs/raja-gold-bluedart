@@ -44,12 +44,12 @@
                      <div class="form-column">
                         <div class="form-group">
                            <label for="pickupTime">Pickup Time *</label>
-                           <input id="pickupTime" type="time" formControlName="pickupTime">
-                           <div *ngIf="orderForm.get('pickupTime')?.invalid && orderForm.get('pickupTime')?.touched"
+                           <input id="pickupTime" type="text" formControlName="pickupTime">
+                           <!-- <div *ngIf="orderForm.get('pickupTime')?.invalid && orderForm.get('pickupTime')?.touched"
                               class="error-message">
                               <div *ngIf="orderForm.get('pickupTime')?.errors?.['required']">Pickup Time is required.
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
                      <!-- Company Name -->
@@ -180,16 +180,16 @@
                      <!-- Sender Name -->
                      <div class="form-column">
                         <div class="form-group">
-                           <label for="senderName">Sender Name *</label>
+                           <label for="senderName">Sender Name</label>
                            <input id="senderName" formControlName="senderName" maxlength="20">
-                           <div *ngIf="orderForm.get('senderName')?.invalid && orderForm.get('senderName')?.touched"
+                           <!-- <div *ngIf="orderForm.get('senderName')?.invalid && orderForm.get('senderName')?.touched"
                               class="error-message">
                               <div *ngIf="orderForm.get('senderName')?.errors?.['required']">Sender Name is required.
                               </div>
                               <div *ngIf="orderForm.get('senderName')?.errors?.['maxlength']">Maximum length is 20
                                  characters.</div>
                               <div *ngIf="orderForm.get('senderName')?.errors?.['pattern']">Invalid characters.</div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
                      <!-- Sender Mobile -->
