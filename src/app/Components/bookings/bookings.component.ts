@@ -336,86 +336,184 @@ export class BookingsComponent implements OnInit {
      }
 
      // Converting Date formate
-     convertDateFormat(dateString: string): string {
-          const dateParts = dateString.split('-'); // Split the string into parts
-          return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Rearrange the parts
-     }
+    
 
      // Exporting Excel file to download list of records
      exportToExcel(): void {
           const selectedData = this.originalData.filter(item => this.selectedItems.has(item.ReferenceNumber));
+          
           if (selectedData.length === 0) {
-               alert('No items selected for export.');
-               return;
+            alert('No items selected for export.');
+            return;
           }
-          const preparedData = selectedData.map(item => ({           
-               'Reference No *': 'RVR '+item.ReferenceNumber,
-               'Billing Area': item.BillingArea,
-               'Billing Customer Code *': '200034',
-               'Pickup Date': this.convertDateFormat(item.PickupDate),
-               'Pickup Time': item.PickupTime,
-               'Shipper Name': item.ShipperName,
-               'Pickup Address *': item.PickupAddress,
-               'Pickup Pincode *': item.PickupPincode,
-               'Company Name': item.CompanyName,
-               'Delivery Address *': item.DeliveryAddress,
-               'Delivery Pincode *': item.DeliveryPincode,
-               'Product Code *': item.ProductCode,
-               'Product Type *': item.ProductType,
-               'Sub Product Code': item.SubProductCode,
-               'Pack Type': item.PakType,
-               'Piece Count *': item.PieceCount,
-               'Actual Weight *': item.ActualWeight,
-               'Declared Value': item.DeclaredValue,
-               'Register Pickup': item.RegisterPickup,
-               'Length': item.Length,
-               'Breadth': item.Breath,
-               'Height': item.Height,
-               'To Pay Customer': item.ToPayCustomer,
-               'Sender': item.Sender,
-               'Vendor Code': item.VendorCode,
-               'Sender Mobile': item.SenderMobile,
-               'Receiver Telephone': item.ReceiverTelephone,
-               'Receiver Mobile': item.ReceiverMobile,
-               'Receiver Name': item.ReceiverName,
-               'Receiver Email ID': item.ReceiverEmailId,
-               'Receiver Latitude': item.ReceiverLatitude,
-               'Receiver Longitude': item.ReceiverLongitude,
-               'Receiver Masked Contact Number': item.ReceiverMaskedContactNumber,
-               'Invoice Number': 'RVR'+item.ReferenceNumber,
-               'Special Instruction': item.SpecialInstruction,
-               'Collectable Amount': item.CollectableAmount,
-               'Commodity Detail 1': item.CommodityDetail1,
-               'Commodity Detail 2': item.CommodityDetail2,
-               'Commodity Detail 3': item.CommodityDetail3,
-               'Is Reverse Pickup': item.IsReversePickup,
-               'Reference No 2': item.ReferenceNo2,
-               'Reference No 3': item.ReferenceNo3,
-               'Item Count': item.ItemCount,
-               'OTP Based Delivery': item.OTPBasedDelivery,
-               'Office Closure Time': item.OfficeClosureTime,
-               'AWB No': item.AWBNo,
-               'Status': item.Status,
-               'Message': item.Message,
-               'Cluster Code': item.ClusterCode,
-               'Destination Area': item.DestinationArea,
-               'Destination Location': item.DestinationLocation,
-               'Pick Up Token No': item.PickupTokenNo,
-               'Response Pickup Date': "",
-               'Transaction Amount': item.TransactionAmount,
-               'Wallet Balance': item.WalletBalance,
-               'Available Booking Amount': item.AvailableBookingAmount,
+      
+          const preparedData = selectedData.map(item => ({
+            'Reference No *': 'RVR ' + item.ReferenceNumber,
+            'Billing Area': item.BillingArea,
+            'Billing Customer Code *': '200034',
+            'Pickup Date': this.convertDateFormat(item.PickupDate),
+            'Pickup Time': item.PickupTime,
+            'Shipper Name': item.ShipperName,
+            'Pickup Address *': item.PickupAddress,
+            'Pickup Pincode *': item.PickupPincode,
+            'Company Name': item.CompanyName,
+            'Delivery Address *': item.DeliveryAddress,
+            'Delivery Pincode *': item.DeliveryPincode,
+            'Product Code *': item.ProductCode,
+            'Product Type *': item.ProductType,
+            'Sub Product Code': item.SubProductCode,
+            'Pack Type': item.PakType,
+            'Piece Count *': item.PieceCount,
+            'Actual Weight *': item.ActualWeight,
+            'Declared Value': item.DeclaredValue,
+            'Register Pickup': item.RegisterPickup,
+            'Length': item.Length,
+            'Breadth': item.Breath,
+            'Height': item.Height,
+            'To Pay Customer': item.ToPayCustomer,
+            'Sender': item.Sender,
+            'Vendor Code': item.VendorCode,
+            'Sender Mobile': item.SenderMobile,
+            'Receiver Telephone': item.ReceiverTelephone,
+            'Receiver Mobile': item.ReceiverMobile,
+            'Receiver Name': item.ReceiverName,
+            'Receiver Email ID': item.ReceiverEmailId,
+            'Receiver Latitude': item.ReceiverLatitude,
+            'Receiver Longitude': item.ReceiverLongitude,
+            'Receiver Masked Contact Number': item.ReceiverMaskedContactNumber,
+            'Invoice Number': 'RVR' + item.ReferenceNumber,
+            'Special Instruction': item.SpecialInstruction,
+            'Collectable Amount': item.CollectableAmount,
+            'Commodity Detail 1': item.CommodityDetail1,
+            'Commodity Detail 2': item.CommodityDetail2,
+            'Commodity Detail 3': item.CommodityDetail3,
+            'Is Reverse Pickup': item.IsReversePickup,
+            'Reference No 2': item.ReferenceNo2,
+            'Reference No 3': item.ReferenceNo3,
+            'Item Count': item.ItemCount,
+            'OTP Based Delivery': item.OTPBasedDelivery,
+            'Office Closure Time': item.OfficeClosureTime,
+            'AWB No': item.AWBNo,
+            'Status': item.Status,
+            'Message': item.Message,
+            'Cluster Code': item.ClusterCode,
+            'Destination Area': item.DestinationArea,
+            'Destination Location': item.DestinationLocation,
+            'Pick Up Token No': item.PickupTokenNo,
+            'Response Pickup Date': "",
+            'Transaction Amount': item.TransactionAmount,
+            'Wallet Balance': item.WalletBalance,
+            'Available Booking Amount': item.AvailableBookingAmount,
           }));
+      
+          this.fillWaybillTemplate(preparedData);
+        }
+      
+        fillWaybillTemplate(preparedData: any[]) {
+          const templateUrl = 'assets/mater_template.xlsx';
+      
+          fetch(templateUrl)
+            .then(response => response.arrayBuffer())
+            .then(data => {
+              const workbook = XLSX.read(data, { type: 'array' });
+      
+              // Access the "Waybill" sheet
+              const waybillSheetName = 'Waybill';
+              const worksheet = workbook.Sheets[waybillSheetName];
+      
+              // Fill the "Waybill" worksheet with prepared data
+              this.fillWaybillWorksheet(worksheet, preparedData);
+      
+              // Generate a new Excel file
+              const newWorkbook = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(newWorkbook, worksheet, waybillSheetName);
+      
+              // Write the new workbook to a binary string
+              const excelBuffer = XLSX.write(newWorkbook, {
+                bookType: 'xlsx',
+                type: 'array',
+              });
+      
+              // Save the file
+              const blob = new Blob([excelBuffer], {
+                type: 'application/octet-stream',
+              });
+              saveAs(blob, 'updated-waybill-template.xlsx');
+            })
+            .catch(err => console.error('Error loading the template:', err));
+        }
+      
+        fillWaybillWorksheet(worksheet: XLSX.WorkSheet, preparedData: any[]) {
+          const startRow = 1; // Assuming you want to start filling from row 5
+          preparedData.forEach((item, index) => {
+            const rowIndex = startRow + index; // Calculate the correct row index
+      
+            // Fill in the worksheet using the prepared data
+            worksheet[`A${rowIndex}`] = { v: item['Reference No *'] };
+            worksheet[`B${rowIndex}`] = { v: item['Billing Area'] };
+            worksheet[`C${rowIndex}`] = { v: item['Billing Customer Code *'] };
+            worksheet[`D${rowIndex}`] = { v: item['Pickup Date'] };
+            worksheet[`E${rowIndex}`] = { v: item['Pickup Time'] };
+            worksheet[`F${rowIndex}`] = { v: item['Shipper Name'] };
+            worksheet[`G${rowIndex}`] = { v: item['Pickup Address *'] };
+            worksheet[`H${rowIndex}`] = { v: item['Pickup Pincode *'] };
+            worksheet[`I${rowIndex}`] = { v: item['Company Name'] };
+            worksheet[`J${rowIndex}`] = { v: item['Delivery Address *'] };
+            worksheet[`K${rowIndex}`] = { v: item['Delivery Pincode *'] };
+            worksheet[`L${rowIndex}`] = { v: item['Product Code *'] };
+            worksheet[`M${rowIndex}`] = { v: item['Product Type *'] };
+            worksheet[`N${rowIndex}`] = { v: item['Sub Product Code'] };
+            worksheet[`O${rowIndex}`] = { v: item['Pack Type'] };
+            worksheet[`P${rowIndex}`] = { v: item['Piece Count *'] };
+            worksheet[`Q${rowIndex}`] = { v: item['Actual Weight *'] };
+            worksheet[`R${rowIndex}`] = { v: item['Declared Value'] };
+            worksheet[`S${rowIndex}`] = { v: item['Register Pickup'] };
+            worksheet[`T${rowIndex}`] = { v: item['Length'] };
+            worksheet[`U${rowIndex}`] = { v: item['Breadth'] };
+            worksheet[`V${rowIndex}`] = { v: item['Height'] };
+            worksheet[`W${rowIndex}`] = { v: item['To Pay Customer'] };
+            worksheet[`X${rowIndex}`] = { v: item['Sender'] };
+            worksheet[`Y${rowIndex}`] = { v: item['Vendor Code'] };
+            worksheet[`Z${rowIndex}`] = { v: item['Sender Mobile'] };
+            worksheet[`AA${rowIndex}`] = { v: item['Receiver Telephone'] };
+            worksheet[`AB${rowIndex}`] = { v: item['Receiver Mobile'] };
+            worksheet[`AC${rowIndex}`] = { v: item['Receiver Name'] };
+            worksheet[`AD${rowIndex}`] = { v: item['Receiver Email ID'] };
+            worksheet[`AE${rowIndex}`] = { v: item['Receiver Latitude'] };
+            worksheet[`AF${rowIndex}`] = { v: item['Receiver Longitude'] };
+            worksheet[`AG${rowIndex}`] = { v: item['Receiver Masked Contact Number'] };
+            worksheet[`AH${rowIndex}`] = { v: item['Invoice Number'] };
+            worksheet[`AI${rowIndex}`] = { v: item['Special Instruction'] };
+            worksheet[`AJ${rowIndex}`] = { v: item['Collectable Amount'] };
+            worksheet[`AK${rowIndex}`] = { v: item['Commodity Detail 1'] };
+            worksheet[`AL${rowIndex}`] = { v: item['Commodity Detail 2'] };
+            worksheet[`AM${rowIndex}`] = { v: item['Commodity Detail 3'] };
+            worksheet[`AN${rowIndex}`] = { v: item['Is Reverse Pickup'] };
+            worksheet[`AO${rowIndex}`] = { v: item['Reference No 2'] };
+            worksheet[`AP${rowIndex}`] = { v: item['Reference No 3'] };
+            worksheet[`AQ${rowIndex}`] = { v: item['Item Count'] };
+            worksheet[`AR${rowIndex}`] = { v: item['OTP Based Delivery'] };
+            worksheet[`AS${rowIndex}`] = { v: item['Office Closure Time'] };
+            worksheet[`AT${rowIndex}`] = { v: item['AWB No'] };
+            worksheet[`AU${rowIndex}`] = { v: item['Status'] };
+            worksheet[`AV${rowIndex}`] = { v: item['Message'] };
+            worksheet[`AW${rowIndex}`] = { v: item['Cluster Code'] };
+            worksheet[`AX${rowIndex}`] = { v: item['Destination Area'] };
+            worksheet[`AY${rowIndex}`] = { v: item['Destination Location'] };
+            worksheet[`AZ${rowIndex}`] = { v: item['Pick Up Token No'] };
+            worksheet[`BA${rowIndex}`] = { v: item['Response Pickup Date'] };
+            worksheet[`BB${rowIndex}`] = { v: item['Transaction Amount'] };
+            worksheet[`BC${rowIndex}`] = { v: item['Wallet Balance'] };
+            worksheet[`BD${rowIndex}`] = { v: item['Available Booking Amount'] };
+          });
+        }
+      
+        convertDateFormat(date: string): string {
+          // Implement your date formatting logic here
+          return new Date(date).toLocaleDateString(); // Example: format as 'MM/DD/YYYY'
+        }
 
-          const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(preparedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, 'Waybill');
-
-          const wbout: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-          const fileName = this.getFormattedDate()+'.xlsx';
-          const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          saveAs(blob, fileName);
-     }
+     
 
      // Generating FileName
      getFormattedDate(): string {
