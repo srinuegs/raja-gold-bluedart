@@ -339,14 +339,17 @@ export class BookingsComponent implements OnInit {
     
 
      // Exporting Excel file to download list of records
+ 
+
      exportToExcel(): void {
           const selectedData = this.originalData.filter(item => this.selectedItems.has(item.ReferenceNumber));
-          
+      
           if (selectedData.length === 0) {
             alert('No items selected for export.');
             return;
           }
       
+          // Map the selected data to the structure required for the template
           const preparedData = selectedData.map(item => ({
             'Reference No *': 'RVR ' + item.ReferenceNumber,
             'Billing Area': item.BillingArea,
@@ -400,115 +403,115 @@ export class BookingsComponent implements OnInit {
             'Destination Area': item.DestinationArea,
             'Destination Location': item.DestinationLocation,
             'Pick Up Token No': item.PickupTokenNo,
-            'Response Pickup Date': "",
+            'Response Pickup Date': '',
             'Transaction Amount': item.TransactionAmount,
             'Wallet Balance': item.WalletBalance,
             'Available Booking Amount': item.AvailableBookingAmount,
           }));
       
-          this.fillWaybillTemplate(preparedData);
-        }
+          // Load the Excel template from assets folder using HttpClient
+          this.loadExcelTemplate('assets/mater_template.xlsx').then((template: XLSX.WorkBook) => {
+            const waybillSheet = template.Sheets['Waybill'];  // Access the 'Waybill' sheet
       
-        fillWaybillTemplate(preparedData: any[]) {
-          const templateUrl = 'assets/mater_template.xlsx';
+            if (waybillSheet) {
       
-          fetch(templateUrl)
-            .then(response => response.arrayBuffer())
-            .then(data => {
-              const workbook = XLSX.read(data, { type: 'array' });
-      
-              // Access the "Waybill" sheet
-              const waybillSheetName = 'Waybill';
-              const worksheet = workbook.Sheets[waybillSheetName];
-      
-              // Fill the "Waybill" worksheet with prepared data
-              this.fillWaybillWorksheet(worksheet, preparedData);
-      
-              // Generate a new Excel file
-              const newWorkbook = XLSX.utils.book_new();
-              XLSX.utils.book_append_sheet(newWorkbook, worksheet, waybillSheetName);
-      
-              // Write the new workbook to a binary string
-              const excelBuffer = XLSX.write(newWorkbook, {
-                bookType: 'xlsx',
-                type: 'array',
+              // Convert the prepared data to a worksheet starting at row 2
+              const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(preparedData, {
+                header: [
+                  'Reference No *',
+                  'Billing Area',
+                  'Billing Customer Code *',
+                  'Pickup Date',
+                  'Pickup Time',
+                  'Shipper Name',
+                  'Pickup Address *',
+                  'Pickup Pincode *',
+                  'Company Name',
+                  'Delivery Address *',
+                  'Delivery Pincode *',
+                  'Product Code *',
+                  'Product Type *',
+                  'Sub Product Code',
+                  'Pack Type',
+                  'Piece Count *',
+                  'Actual Weight *',
+                  'Declared Value',
+                  'Register Pickup',
+                  'Length',
+                  'Breadth',
+                  'Height',
+                  'To Pay Customer',
+                  'Sender',
+                  'Vendor Code',
+                  'Sender Mobile',
+                  'Receiver Telephone',
+                  'Receiver Mobile',
+                  'Receiver Name',
+                  'Receiver Email ID',
+                  'Receiver Latitude',
+                  'Receiver Longitude',
+                  'Receiver Masked Contact Number',
+                  'Invoice Number',
+                  'Special Instruction',
+                  'Collectable Amount',
+                  'Commodity Detail 1',
+                  'Commodity Detail 2',
+                  'Commodity Detail 3',
+                  'Is Reverse Pickup',
+                  'Reference No 2',
+                  'Reference No 3',
+                  'Item Count',
+                  'OTP Based Delivery',
+                  'Office Closure Time',
+                  'AWB No',
+                  'Status',
+                  'Message',
+                  'Cluster Code',
+                  'Destination Area',
+                  'Destination Location',
+                  'Pick Up Token No',
+                  'Response Pickup Date',
+                  'Transaction Amount',
+                  'Wallet Balance',
+                  'Available Booking Amount'
+                ],
+                skipHeader: false,  // Include the headers for the first row
               });
       
-              // Save the file
-              const blob = new Blob([excelBuffer], {
-                type: 'application/octet-stream',
-              });
-              saveAs(blob, 'updated-waybill-template.xlsx');
-            })
-            .catch(err => console.error('Error loading the template:', err));
-        }
+              // Now append the new data to the sheet starting from row 2 (after existing data)
+              XLSX.utils.sheet_add_json(waybillSheet, preparedData, { skipHeader: true, origin: { r: 1, c: 0 } });
       
-        fillWaybillWorksheet(worksheet: XLSX.WorkSheet, preparedData: any[]) {
-          const startRow = 1; // Assuming you want to start filling from row 5
-          preparedData.forEach((item, index) => {
-            const rowIndex = startRow + index; // Calculate the correct row index
-      
-            // Fill in the worksheet using the prepared data
-            worksheet[`A${rowIndex}`] = { v: item['Reference No *'] };
-            worksheet[`B${rowIndex}`] = { v: item['Billing Area'] };
-            worksheet[`C${rowIndex}`] = { v: item['Billing Customer Code *'] };
-            worksheet[`D${rowIndex}`] = { v: item['Pickup Date'] };
-            worksheet[`E${rowIndex}`] = { v: item['Pickup Time'] };
-            worksheet[`F${rowIndex}`] = { v: item['Shipper Name'] };
-            worksheet[`G${rowIndex}`] = { v: item['Pickup Address *'] };
-            worksheet[`H${rowIndex}`] = { v: item['Pickup Pincode *'] };
-            worksheet[`I${rowIndex}`] = { v: item['Company Name'] };
-            worksheet[`J${rowIndex}`] = { v: item['Delivery Address *'] };
-            worksheet[`K${rowIndex}`] = { v: item['Delivery Pincode *'] };
-            worksheet[`L${rowIndex}`] = { v: item['Product Code *'] };
-            worksheet[`M${rowIndex}`] = { v: item['Product Type *'] };
-            worksheet[`N${rowIndex}`] = { v: item['Sub Product Code'] };
-            worksheet[`O${rowIndex}`] = { v: item['Pack Type'] };
-            worksheet[`P${rowIndex}`] = { v: item['Piece Count *'] };
-            worksheet[`Q${rowIndex}`] = { v: item['Actual Weight *'] };
-            worksheet[`R${rowIndex}`] = { v: item['Declared Value'] };
-            worksheet[`S${rowIndex}`] = { v: item['Register Pickup'] };
-            worksheet[`T${rowIndex}`] = { v: item['Length'] };
-            worksheet[`U${rowIndex}`] = { v: item['Breadth'] };
-            worksheet[`V${rowIndex}`] = { v: item['Height'] };
-            worksheet[`W${rowIndex}`] = { v: item['To Pay Customer'] };
-            worksheet[`X${rowIndex}`] = { v: item['Sender'] };
-            worksheet[`Y${rowIndex}`] = { v: item['Vendor Code'] };
-            worksheet[`Z${rowIndex}`] = { v: item['Sender Mobile'] };
-            worksheet[`AA${rowIndex}`] = { v: item['Receiver Telephone'] };
-            worksheet[`AB${rowIndex}`] = { v: item['Receiver Mobile'] };
-            worksheet[`AC${rowIndex}`] = { v: item['Receiver Name'] };
-            worksheet[`AD${rowIndex}`] = { v: item['Receiver Email ID'] };
-            worksheet[`AE${rowIndex}`] = { v: item['Receiver Latitude'] };
-            worksheet[`AF${rowIndex}`] = { v: item['Receiver Longitude'] };
-            worksheet[`AG${rowIndex}`] = { v: item['Receiver Masked Contact Number'] };
-            worksheet[`AH${rowIndex}`] = { v: item['Invoice Number'] };
-            worksheet[`AI${rowIndex}`] = { v: item['Special Instruction'] };
-            worksheet[`AJ${rowIndex}`] = { v: item['Collectable Amount'] };
-            worksheet[`AK${rowIndex}`] = { v: item['Commodity Detail 1'] };
-            worksheet[`AL${rowIndex}`] = { v: item['Commodity Detail 2'] };
-            worksheet[`AM${rowIndex}`] = { v: item['Commodity Detail 3'] };
-            worksheet[`AN${rowIndex}`] = { v: item['Is Reverse Pickup'] };
-            worksheet[`AO${rowIndex}`] = { v: item['Reference No 2'] };
-            worksheet[`AP${rowIndex}`] = { v: item['Reference No 3'] };
-            worksheet[`AQ${rowIndex}`] = { v: item['Item Count'] };
-            worksheet[`AR${rowIndex}`] = { v: item['OTP Based Delivery'] };
-            worksheet[`AS${rowIndex}`] = { v: item['Office Closure Time'] };
-            worksheet[`AT${rowIndex}`] = { v: item['AWB No'] };
-            worksheet[`AU${rowIndex}`] = { v: item['Status'] };
-            worksheet[`AV${rowIndex}`] = { v: item['Message'] };
-            worksheet[`AW${rowIndex}`] = { v: item['Cluster Code'] };
-            worksheet[`AX${rowIndex}`] = { v: item['Destination Area'] };
-            worksheet[`AY${rowIndex}`] = { v: item['Destination Location'] };
-            worksheet[`AZ${rowIndex}`] = { v: item['Pick Up Token No'] };
-            worksheet[`BA${rowIndex}`] = { v: item['Response Pickup Date'] };
-            worksheet[`BB${rowIndex}`] = { v: item['Transaction Amount'] };
-            worksheet[`BC${rowIndex}`] = { v: item['Wallet Balance'] };
-            worksheet[`BD${rowIndex}`] = { v: item['Available Booking Amount'] };
+              // Export the updated workbook with new data
+              XLSX.writeFile(template, 'updated_records.xlsx');
+            } else {
+              alert('Waybill sheet not found in the template.');
+            }
+          }).catch(err => {
+            console.error('Error loading Excel template:', err);
           });
         }
       
-        convertDateFormat(date: string): string {
+        // Load the Excel template from the assets folder using HttpClient
+        loadExcelTemplate(templatePath: string): Promise<XLSX.WorkBook> {
+          return new Promise((resolve, reject) => {
+            // Ensure that the path is valid (i.e., string type)
+            if (typeof templatePath !== 'string' || !templatePath) {
+              reject('Invalid template path');
+              return;
+            }
+      
+            this.http.get(templatePath, { responseType: 'arraybuffer' }).subscribe({
+              next: (data) => {
+                const workbook = XLSX.read(new Uint8Array(data), { type: 'array' });
+                resolve(workbook);
+              },
+              error: (err) => {
+                reject('Failed to load the template: ' + err);
+              }
+            });
+          });
+        }
+              convertDateFormat(date: string): string {
           // Implement your date formatting logic here
           return new Date(date).toLocaleDateString(); // Example: format as 'MM/DD/YYYY'
         }
